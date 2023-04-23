@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/todoApp/static/js/main.a1df60a4.js",
+    "main.js": "/todoApp/static/js/main.dc30789e.js",
     "index.html": "/todoApp/index.html",
-    "main.a1df60a4.js.map": "/todoApp/static/js/main.a1df60a4.js.map"
+    "main.dc30789e.js.map": "/todoApp/static/js/main.dc30789e.js.map"
   },
   "entrypoints": [
-    "static/js/main.a1df60a4.js"
+    "static/js/main.dc30789e.js"
   ]
 }
