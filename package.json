@@ -2,7 +2,7 @@
   "name": "todo_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://arkadychakhalyan.github.io/remember/#",
+  "homepage": "http://arkadychakhalyan.github.io/remember",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
