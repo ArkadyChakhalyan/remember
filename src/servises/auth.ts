@@ -1,7 +1,7 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { app } from './firebase';
+import { firebase } from './firebase';
 
-const auth = getAuth(app);
+const auth = getAuth(firebase);
 
 export const signUp = (
     email: string,
@@ -13,7 +13,7 @@ export const signUp = (
             console.log(user);
         })
         .catch((error) => {
-            console.log('signUp error');
+            console.log(error, 'signUp error');
         });
 };
 
@@ -27,6 +27,6 @@ export const signIn = (
             console.log(user);
         })
         .catch((error) => {
-            console.log('signIn error');
+            console.log(error, 'signIn error');
         });
 };
