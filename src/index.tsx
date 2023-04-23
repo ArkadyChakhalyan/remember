@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './app/app';
-import { BrowserRouter as Browser} from 'react-router-dom';
+import { HashRouter as Browser} from 'react-router-dom';
 import { GlobalStyles, ThemeProvider } from '@mui/material';
 import { theme } from './style/theme';
 
