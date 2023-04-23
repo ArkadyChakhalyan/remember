@@ -14,7 +14,7 @@ export const App = () => {
 
 const containerStyle = {
     width: `calc(100vw - ${theme.spacing(36)})`,
-    height: '100vh',
+    height: '100svh',
     ml: 36,
     borderTopLeftRadius: theme.shape.borderRadius * 20,
     borderBottomLeftRadius: theme.shape.borderRadius * 20,
@@ -26,7 +26,7 @@ const containerStyle = {
     },
     [theme.breakpoints.down('sm')]: {
         width: '100vw',
-        height: `calc(100vh - ${theme.spacing(8)})`,
+        height: `calc(100svh - ${theme.spacing(8)})`,
         mb: 8,
         ml: 0,
         borderTopLeftRadius: 0,

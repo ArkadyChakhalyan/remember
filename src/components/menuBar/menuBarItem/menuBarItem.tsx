@@ -49,7 +49,7 @@ const buttonStyle = {
         ml: 0
     },
     '.MuiSvgIcon-root': {
-        fontSize: theme.spacing(3)
+        fontSize: `${theme.spacing(3)} !important`
     },
     '&.MuiButton-contained': {
         '&:hover': {
@@ -72,7 +72,7 @@ const buttonStyle = {
     },
     [theme.breakpoints.down('sm')]: {
         '.MuiSvgIcon-root': {
-            fontSize: theme.spacing(3.5)
+            fontSize: `${theme.spacing(3.5)} !important`
         }
     }
 };
