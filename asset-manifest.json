@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/todoApp/static/js/main.fedea173.js",
-    "index.html": "/todoApp/index.html",
-    "main.fedea173.js.map": "/todoApp/static/js/main.fedea173.js.map"
+    "main.js": "/remember/static/js/main.fedea173.js",
+    "index.html": "/remember/index.html",
+    "main.fedea173.js.map": "/remember/static/js/main.fedea173.js.map"
   },
   "entrypoints": [
     "static/js/main.fedea173.js"
