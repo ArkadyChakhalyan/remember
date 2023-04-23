@@ -9,7 +9,20 @@ export const MenuBarItem: FC<TMenuBarItemProps> = ({
     icon,
     label,
     link,
+    onClick
 }) => {
+    const button = <Button
+        size={'large'}
+        startIcon={icon}
+        sx={buttonStyle}
+        disableRipple
+        disableTouchRipple
+        disableFocusRipple
+        variant={active ? 'contained' : 'text'}
+        onClick={onClick}
+    >
+        <Stack sx={labelStyle}>{label}</Stack>
+    </Button>;
     return <Tooltip
         title={label}
         placement={'right'}
@@ -18,19 +31,13 @@ export const MenuBarItem: FC<TMenuBarItemProps> = ({
         enterDelay={300}
         enterNextDelay={300}
     >
-        <Link to={link} tabIndex={-1} style={linkStyle}>
-            <Button
-                size={'large'}
-                startIcon={icon}
-                sx={buttonStyle}
-                disableRipple
-                disableTouchRipple
-                disableFocusRipple
-                variant={active ? 'contained' : 'text'}
-            >
-                <Stack sx={labelStyle}>{label}</Stack>
-            </Button>
-        </Link>
+        {
+            link ?
+                <Link to={link} tabIndex={-1} style={linkStyle}>
+                    {button}
+                </Link>
+                : button
+        }
     </Tooltip>;
 };
 

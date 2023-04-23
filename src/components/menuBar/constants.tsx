@@ -1,7 +1,8 @@
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
-import DateRangeRoundedIcon from '@mui/icons-material/DateRangeRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
+import ChecklistRoundedIcon from '@mui/icons-material/ChecklistRounded';
+
 export const MENU_BAR_OPTIONS = [
     {
         label: 'Dashboard',
@@ -9,14 +10,14 @@ export const MENU_BAR_OPTIONS = [
         link: '/dashboard',
     },
     {
-        label: 'Calendar',
-        icon: <DateRangeRoundedIcon />,
-        link: '/calendar'
+        label: 'Memories',
+        icon: <ChecklistRoundedIcon />,
+        link: '/memories'
     },
     {
-        label: 'About',
-        icon: <InfoRoundedIcon />,
-        link: '/about'
+        label: 'Calendar',
+        icon: <EventNoteRoundedIcon />,
+        link: '/calendar'
     },
     {
         label: 'Settings',
@@ -24,3 +25,5 @@ export const MENU_BAR_OPTIONS = [
         link: '/settings'
     },
 ];
+
+export const MENU_BAR_LOGOUT_LABEL = 'Logout';
