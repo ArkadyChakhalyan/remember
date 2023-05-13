@@ -1,10 +1,11 @@
-import { Stack } from '@mui/material';
+import { alpha, Stack } from '@mui/material';
 import { Logo } from '../logo/logo';
 import { MENU_BAR_LOGOUT_LABEL, MENU_BAR_OPTIONS } from './constants';
 import { useLocation } from 'react-router-dom';
 import { MenuBarItem } from './menuBarItem/menuBarItem';
 import { theme } from '../../style/theme';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { AddButton } from './addButton/addButton';
 
 export const MenuBar = () => {
     const location = useLocation();
@@ -25,6 +26,7 @@ export const MenuBar = () => {
                     ))
                 }
             </Stack>
+            <AddButton />
             <MenuBarItem
                 icon={<LogoutRoundedIcon />}
                 label={MENU_BAR_LOGOUT_LABEL}
@@ -50,39 +52,49 @@ const containerStyle = {
     [theme.breakpoints.down('sm')]: {
         justifyContent: 'center',
         top: 'unset',
-        bottom: 0,
-        width: `calc(100% - ${theme.spacing(12)})`,
-        height: theme.spacing(8),
+        bottom: theme.spacing(3),
+        left: theme.spacing(4),
+        right: theme.spacing(4),
+        width: `calc(100% - ${theme.spacing(5 + 8)})`,
+        height: theme.spacing(10),
         gap: 0,
-        px: 6,
+        px: 2.5,
         py: 0,
-        '& > div:first-child': {
+        background: theme.palette.secondary.main,
+        borderRadius: theme.shape.borderRadius * 7,
+        boxShadow: `0 0 ${theme.spacing(3)} ${alpha(theme.palette.common.black, 0.3)}`,
+        '& > div:first-of-type': {
             display: 'none'
         },
+        'a': {
+            width: 'fit-content !important',
+        }
     },
     [theme.breakpoints.down('xs')]: {
-        width: `calc(100% - ${theme.spacing(8)})`,
-        px: 4
+        left: theme.spacing(1.5),
+        right: theme.spacing(1.5),
+        bottom: theme.spacing(2),
+        width: `calc(100% - ${theme.spacing(6)})`,
+        height: theme.spacing(8.5),
+        px: 1.5,
+        borderRadius: theme.shape.borderRadius * 5,
     }
 };
 
 const menuStyle = {
     gap: theme.spacing(1),
     width: 1,
+    alignItems: 'center',
+    zIndex: 1,
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: 0,
-        'a:nth-child(3)': {
-            marginLeft: 5
+        'a:nth-of-type(3)': {
+            marginLeft: '25%'
         }
     },
-    [theme.breakpoints.down('xs')]: {
-        'a:nth-child(3)': {
-            marginLeft: 4
-        }
-    }
 };
 
 const contentStyle = {

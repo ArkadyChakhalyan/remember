@@ -28,8 +28,8 @@ export const MenuBarItem: FC<TMenuBarItemProps> = ({
         placement={'right'}
         disableInteractive
         PopperProps={{ sx: popperStyle }}
-        enterDelay={300}
-        enterNextDelay={300}
+        enterDelay={200}
+        enterNextDelay={200}
     >
         {
             link ?
@@ -87,11 +87,12 @@ const buttonStyle = {
 const linkStyle = {
     display: 'flex',
     justifyContent: 'center',
-    textDecoration: 'none'
+    width: '100%',
+    textDecoration: 'none',
 };
 
 const popperStyle = {
-    pl: 1,
+    pl: 1.5,
     display: 'none',
     [theme.breakpoints.between('sm', 'lg')]: {
         display: 'unset'

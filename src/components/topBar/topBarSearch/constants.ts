@@ -1,0 +1,1 @@
+export const TOP_BAR_SEARCH_PLACEHOLDER = 'Search...'

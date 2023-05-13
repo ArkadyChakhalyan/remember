@@ -6,7 +6,7 @@ export const theme = createTheme({
             styleOverrides: {
                 tooltip: {
                     padding: '10px 12px',
-                    backgroundColor: alpha('#000', 0.8),
+                    backgroundColor: alpha('#000', 0.4),
                     borderRadius: 10,
                 }
             }
