@@ -2,16 +2,26 @@ import React from 'react';
 import { MenuBar } from '../components/menuBar/menuBar';
 import { alpha, Stack } from '@mui/material';
 import { theme } from '../style/theme';
-import { TopBar } from '../components/topBar/topBar';
-import { AddTaskButton } from '../components/addTaskButton/addTaskButton';
-import { AddTask } from '../components/addTask/addTask';
+import { Dashboard } from '../pages/dashboard/dashboard';
+import { Route, Routes } from 'react-router-dom';
+import { BaseLayout } from '../pages/pageLayout/baseLayout';
+import { AdditionalLayout } from '../pages/pageLayout/additionalLayout';
 
 export const App = () => {
     return <>
         <MenuBar />
         <Stack sx={containerStyle}>
-            <TopBar />
-            <AddTask />
+            <Routes>
+                <Route path='/' element={<BaseLayout />}>
+                    {/*<Route index element={<DashboardTasks />} />*/}
+                    <Route path={'dashboard'} element={<Dashboard />} />
+                    <Route path={'tasks'} element={<Dashboard />} />
+                    <Route path={'calendar'} element={<Dashboard />} />
+                </Route>
+                <Route path='/' element={<AdditionalLayout />}>
+                    <Route path={'settings'} element={<Dashboard />} />
+                </Route>
+            </Routes>
         </Stack>
     </>;
 };

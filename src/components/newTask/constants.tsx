@@ -1,9 +1,10 @@
 import { theme } from '../../style/theme';
 import { alpha } from '@mui/material';
+import { TTaskPriority } from '../../store/reducers/tasksReducer/types';
 
 export const NEW_TASK_PLACEHOLDER = 'I need to...';
 
-export const NEW_TASK_PRIORITIES = [
+export const NEW_TASK_PRIORITIES: { value: TTaskPriority, color: string }[] = [
     {
         value: 0,
         color: alpha(theme.palette.primary.main, 0.1)

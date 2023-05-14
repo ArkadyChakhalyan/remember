@@ -1,4 +1,4 @@
-import { ETaskDate } from '../newTaskDate/types';
+import { ETaskDate } from '../components/newTask/newTaskDate/types';
 
 export const getTaskDateByLabel = (label: string) => {
     const date = new Date();

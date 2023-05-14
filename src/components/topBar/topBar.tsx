@@ -77,10 +77,7 @@ const containerStyle = {
     },
     [theme.breakpoints.down('sm')]: {
         '&:before': {
-            bottom: theme.spacing(-4),
-            height: theme.spacing(4),
-            borderRadius: 0,
-            background: `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${alpha(theme.palette.primary.main, 0)} 100%)`
+            display: 'none'
         }
     },
     [theme.breakpoints.down('xs')]: {

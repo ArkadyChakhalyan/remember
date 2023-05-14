@@ -103,7 +103,7 @@ export const AddTask = () => {
                 onClick: onPaperClick
             }}
         >
-            <NewTask preventClose={() => setKeepOpen(true)}/>
+            <NewTask preventClose={() => setKeepOpen(true)} onClose={onClose}/>
         </Popover>
     </Stack>;
 };

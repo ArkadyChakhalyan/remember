@@ -7,15 +7,48 @@ import { DEFAULT_TASK_PRIORITY } from '../../app/constants';
 import { theme } from '../../style/theme';
 import { teal } from '@mui/material/colors';
 import { NewTaskDate } from './newTaskDate/newTaskDate';
-import { getTaskDateByLabel } from './helpers/getTaskDateByLabel';
+import { getTaskDateByLabel } from '../../helpers/getTaskDateByLabel';
 import { ETaskDate } from './newTaskDate/types';
+import { useDispatch } from 'react-redux';
+import { addTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
+import { v4 as uuid } from 'uuid';
 
 export const NewTask: FC<TNewTaskProps> = ({
-    preventClose
+    preventClose,
+    onClose
 }) => {
-    const [value, setValue] = useState('');
-    const [emotion, setEmotion] = useState(DEFAULT_TASK_PRIORITY);
+    const dispatch = useDispatch();
+
+    const [text, setText] = useState('');
+    const [priority, setPriority] = useState(DEFAULT_TASK_PRIORITY);
     const [date, setDate] = useState(getTaskDateByLabel(ETaskDate.THIS_MONTH));
+
+    const onAdd = () => {
+        dispatch(addTaskAC({
+            id: uuid(),
+            text,
+            priority,
+            date,
+            doneDate: null
+        }));
+        onClose();
+    };
+
+    const onKeyDown = (e: React.KeyboardEvent) => {
+        if (!text) return;
+        if (e.key === 'Enter') {
+            onAdd();
+        }
+    };
+
+    const onInputKeyDown = (e: React.KeyboardEvent) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+            e.stopPropagation();
+            setText(text + '\n');
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+        }
+    };
 
     const inputRef = useRef(null);
 
@@ -30,27 +63,28 @@ export const NewTask: FC<TNewTaskProps> = ({
     useEffect(() => {
         if (preventClose) {
             if (
-                !value &&
-                emotion === DEFAULT_TASK_PRIORITY &&
+                !text &&
+                priority === DEFAULT_TASK_PRIORITY &&
                 date === getTaskDateByLabel(ETaskDate.THIS_MONTH)
             ) {
                 return;
             }
             preventClose();
         }
-    }, [value, emotion]);
+    }, [text, priority]);
 
-    return <Stack style={containerStyle} spacing={2}>
+    return <Stack sx={containerStyle} spacing={2} onKeyDown={onKeyDown}>
         <NewTaskDate date={date} onChange={setDate} />
         <TextField
             ref={inputRef}
             multiline
             autoFocus
-            value={value}
-            onChange={e => setValue(e.currentTarget.value)}
+            value={text}
+            onChange={e => setText(e.currentTarget.value)}
             placeholder={NEW_TASK_PLACEHOLDER}
             variant={'standard'}
             id={'new-task-input'}
+            onKeyDown={onInputKeyDown}
             sx={inputStyle}
         />
         <Stack sx={priorityStyle}>
@@ -59,8 +93,8 @@ export const NewTask: FC<TNewTaskProps> = ({
                     <NewTaskPriority
                         key={value}
                         color={color}
-                        selected={emotion === value}
-                        onSelect={() => setEmotion(value)}
+                        selected={priority === value}
+                        onSelect={() => setPriority(value)}
                     />
                 ))
             }
@@ -68,11 +102,12 @@ export const NewTask: FC<TNewTaskProps> = ({
         <Button
             size={'large'}
             variant={'contained'}
-            disabled={!value}
+            disabled={!text}
             disableRipple
             disableTouchRipple
             disableFocusRipple
             sx={buttonStyle}
+            onClick={onAdd}
         >
             Add new task
         </Button>

@@ -42,7 +42,7 @@ export const MenuBar = () => {
                     }
                 </Stack>
                 <Stack sx={{ ...addStyle, ...(open ? showStyle : null) }}>
-                    {open && <NewTask/>}
+                    {open && <NewTask onClose={() => setOpen(false)} />}
                 </Stack>
                 <MenuBarAdd open={open} onToggle={() => setOpen(!open)} />
                 <MenuBarItem

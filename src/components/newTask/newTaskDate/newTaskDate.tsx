@@ -2,7 +2,7 @@ import { MenuItem, Select } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { TNewTaskDateProps } from './types';
 import { NEW_TASK_DATES } from './constants';
-import { getTaskDateByLabel } from '../helpers/getTaskDateByLabel';
+import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
 import { theme } from '../../../style/theme';
 
 export const NewTaskDate: FC<TNewTaskDateProps> = ({
