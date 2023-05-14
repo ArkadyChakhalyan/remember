@@ -22,6 +22,7 @@ const iconStyle = {
 };
 
 const textStyle = {
+    userSelect: 'none',
     [theme.breakpoints.down('lg')]: {
         display: 'none'
     }

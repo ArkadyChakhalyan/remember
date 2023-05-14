@@ -10,9 +10,9 @@ export const MENU_BAR_OPTIONS = [
         link: '/dashboard',
     },
     {
-        label: 'Memories',
+        label: 'Tasks',
         icon: <ChecklistRoundedIcon />,
-        link: '/memories'
+        link: '/tasks'
     },
     {
         label: 'Calendar',

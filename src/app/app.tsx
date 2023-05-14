@@ -3,12 +3,15 @@ import { MenuBar } from '../components/menuBar/menuBar';
 import { alpha, Stack } from '@mui/material';
 import { theme } from '../style/theme';
 import { TopBar } from '../components/topBar/topBar';
+import { AddTaskButton } from '../components/addTaskButton/addTaskButton';
+import { AddTask } from '../components/addTask/addTask';
 
 export const App = () => {
     return <>
         <MenuBar />
         <Stack sx={containerStyle}>
             <TopBar />
+            <AddTask />
         </Stack>
     </>;
 };

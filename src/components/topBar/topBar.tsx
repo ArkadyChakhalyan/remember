@@ -61,6 +61,7 @@ const containerStyle = {
     height: theme.spacing(12),
     position: 'sticky',
     px: 4,
+    zIndex: theme.zIndex.mobileStepper, // to go under popover
     '&:before': {
         content: '""',
         position: 'absolute',
@@ -74,13 +75,21 @@ const containerStyle = {
     [theme.breakpoints.down('md')]: {
         gap: 2,
     },
+    [theme.breakpoints.down('sm')]: {
+        '&:before': {
+            bottom: theme.spacing(-4),
+            height: theme.spacing(4),
+            borderRadius: 0,
+            background: `linear-gradient(180deg, ${theme.palette.primary.main} 0%, ${alpha(theme.palette.primary.main, 0)} 100%)`
+        }
+    },
     [theme.breakpoints.down('xs')]: {
         height: theme.spacing(11),
         px: 1.5,
         '&:before': {
             left: theme.spacing(1.5),
             width: `calc(100% - ${theme.spacing(3)})`,
-        },
+        }
     }
 };
 
