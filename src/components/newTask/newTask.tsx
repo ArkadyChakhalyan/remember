@@ -89,11 +89,11 @@ export const NewTask: FC<TNewTaskProps> = ({
         />
         <Stack sx={priorityStyle}>
             {
-                NEW_TASK_PRIORITIES.map(({ color, value }) => (
+                NEW_TASK_PRIORITIES.map((value) => (
                     <NewTaskPriority
                         key={value}
-                        color={color}
-                        selected={priority === value}
+                        priority={value}
+                        selected={value === priority}
                         onSelect={() => setPriority(value)}
                     />
                 ))

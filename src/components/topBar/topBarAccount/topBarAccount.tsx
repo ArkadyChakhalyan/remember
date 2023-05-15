@@ -1,7 +1,11 @@
-import React, { useState, MouseEvent } from 'react';
-import { alpha, Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import React, { MouseEvent, useState } from 'react';
+import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { theme } from '../../../style/theme';
-import { TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT, TOP_BAR_ACCOUNT_SETTINGS_LOGOUT, TOP_BAR_ACCOUNT_TOOLTIP } from './constants';
+import {
+    TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT,
+    TOP_BAR_ACCOUNT_SETTINGS_LOGOUT,
+    TOP_BAR_ACCOUNT_TOOLTIP
+} from './constants';
 
 export const TopBarAccount = () => {
     const [anchor, setAnchor] = useState<null | HTMLElement>(null);
@@ -13,22 +17,6 @@ export const TopBarAccount = () => {
     const onClose = () => {
         setAnchor(null);
     };
-
-    const onClick = (event: () => void) => {
-        event();
-        onClose();
-    };
-
-    const settings = [
-        {
-            title: TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT,
-            event: () => onClick(() => {})
-        },
-        {
-            title: TOP_BAR_ACCOUNT_SETTINGS_LOGOUT,
-            event: () => onClick(() => {})
-        }
-    ];
 
     return (
         <>
@@ -59,7 +47,6 @@ export const TopBarAccount = () => {
                     vertical: 'bottom',
                     horizontal: 'right',
                 }}
-                keepMounted
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'right',
@@ -68,19 +55,26 @@ export const TopBarAccount = () => {
                 onClose={onClose}
                 PaperProps={{ sx: menuStyle, elevation: 3 }}
             >
-                {
-                    settings.map(({ title, event  }) => (
-                        <MenuItem
-                            key={title}
-                            onClick={event}
-                            sx={{ height: theme.spacing(5.5), px: 3 }}
-                        >
-                            <Typography color={'secondary'}>
-                                {title}
-                            </Typography>
-                        </MenuItem>
-                    ))
-                }
+                <MenuItem
+                    onClick={null}
+                    disableRipple
+                    disableTouchRipple
+                    sx={{ height: theme.spacing(5.5), px: 3 }}
+                >
+                    <Typography color={'secondary'}>
+                        {TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT}
+                    </Typography>
+                </MenuItem>
+                <MenuItem
+                    onClick={null}
+                    disableRipple
+                    disableTouchRipple
+                    sx={{ height: theme.spacing(5.5), px: 3 }}
+                >
+                    <Typography color={'secondary'}>
+                        {TOP_BAR_ACCOUNT_SETTINGS_LOGOUT}
+                    </Typography>
+                </MenuItem>
             </Menu>
         </>
     );

@@ -92,9 +92,9 @@ const containerStyle = {
 
 const notificationsStyle = {
     color: alpha(theme.palette.secondary.main, 0.6),
+    transition: theme.transitions.create('color'),
     '&:hover, &:focus': {
         color: theme.palette.secondary.main,
-        transition: theme.transitions.create('color')
     },
     [theme.breakpoints.down('sm')]: {
         display: 'none'

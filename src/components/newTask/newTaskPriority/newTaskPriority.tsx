@@ -3,9 +3,10 @@ import React, { FC } from 'react';
 import { TNewTaskPriorityProps } from './types';
 import { theme } from '../../../style/theme';
 import { teal } from '@mui/material/colors';
+import { PRIORITY_COLORS } from '../../../app/constants';
 
 export const NewTaskPriority: FC<TNewTaskPriorityProps> = ({
-    color,
+    priority,
     selected,
     onSelect
 }) => {
@@ -14,7 +15,7 @@ export const NewTaskPriority: FC<TNewTaskPriorityProps> = ({
         sx={{
             ...style,
             ...(selected ? selectedStyle : null),
-            bgcolor: color
+            bgcolor: PRIORITY_COLORS[priority]
         }}
         disableRipple
         disableTouchRipple

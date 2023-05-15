@@ -1,5 +1,7 @@
+import { TTaskPriority } from '../../../store/reducers/tasksReducer/types';
+
 export type TNewTaskPriorityProps = {
-    color: string;
+    priority: TTaskPriority;
     selected: boolean;
     onSelect: () => void;
 }

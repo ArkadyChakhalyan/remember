@@ -64,6 +64,7 @@ const containerStyle = {
     px: 4,
     py: 5,
     gap: theme.spacing(4),
+    zIndex: theme.zIndex.appBar,
     [theme.breakpoints.down('lg')]: {
         width: theme.spacing(8),
         px: 1.5,
