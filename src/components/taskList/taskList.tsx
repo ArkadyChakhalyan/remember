@@ -17,9 +17,6 @@ export const TaskList: FC<TTaskListProps> = ({
         <Button
             variant={'text'}
             color={'secondary'}
-            disableRipple
-            disableTouchRipple
-            disableFocusRipple
             sx={buttonStyle}
             size={'large'}
         >

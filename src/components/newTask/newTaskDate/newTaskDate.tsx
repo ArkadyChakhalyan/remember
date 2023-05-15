@@ -46,8 +46,6 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
                 sx={itemStyle}
                 key={label}
                 value={value}
-                disableRipple
-                disableTouchRipple
             >
                 {label}
             </MenuItem>

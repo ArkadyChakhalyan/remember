@@ -29,9 +29,6 @@ export const TopBar = () => {
                 <IconButton
                     size={'large'}
                     color={'secondary'}
-                    disableRipple
-                    disableTouchRipple
-                    disableFocusRipple
                     sx={notificationsStyle}
                 >
                     <Badge
@@ -69,7 +66,7 @@ const containerStyle = {
         left: theme.spacing(4),
         width: `calc(100% - ${theme.spacing(8)})`,
         height: theme.spacing(0.25),
-        bgcolor: alpha(theme.palette.secondary.main, 0.05),
+        bgcolor: 'divider',
         borderRadius: theme.shape.borderRadius
     },
     [theme.breakpoints.down('md')]: {

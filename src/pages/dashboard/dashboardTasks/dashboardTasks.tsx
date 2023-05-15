@@ -25,7 +25,7 @@ export const DashboardTasks = () => {
         <Tabs
             value={tab}
             onChange={(e, tab) => setTab(tab)}
-            sx={{ borderBottom: 1, borderColor: alpha(theme.palette.secondary.main, 0.1) }}
+            sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
             {
                 DASHBOARDS_TASK_LIST_TAB.map(tab => (
@@ -41,9 +41,6 @@ export const DashboardTasks = () => {
                         }}
                         label={tab.label}
                         value={tab}
-                        disableRipple
-                        disableTouchRipple
-                        disableFocusRipple
                     />
                 ))
             }

@@ -15,9 +15,6 @@ export const AddTaskButton: FC<TAddTaskButtonProps> = ({
         <IconButton
             size={'large'}
             sx={buttonStyle}
-            disableRipple
-            disableTouchRipple
-            disableFocusRipple
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             onClick={onClick}

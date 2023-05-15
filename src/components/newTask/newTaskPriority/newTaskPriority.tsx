@@ -17,9 +17,6 @@ export const NewTaskPriority: FC<TNewTaskPriorityProps> = ({
             ...(selected ? selectedStyle : null),
             bgcolor: PRIORITY_COLORS[priority]
         }}
-        disableRipple
-        disableTouchRipple
-        disableFocusRipple
     />;
 };
 

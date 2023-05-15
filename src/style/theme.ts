@@ -10,6 +10,58 @@ export const theme = createTheme({
                     borderRadius: 10,
                 }
             }
+        },
+        MuiButton: {
+            defaultProps: {
+                disableRipple: true,
+                disableTouchRipple: true,
+                disableFocusRipple: true
+            }
+        },
+        MuiIconButton: {
+            defaultProps: {
+                disableRipple: true,
+                disableTouchRipple: true,
+                disableFocusRipple: true
+            }
+        },
+        MuiMenuItem: {
+            defaultProps: {
+                disableRipple: true,
+                disableTouchRipple: true,
+            },
+            styleOverrides: {
+                root: {
+                    padding: '6px 16px',
+                    borderRadius: '6px'
+                }
+            }
+        },
+        MuiTab: {
+            defaultProps: {
+                disableRipple: true,
+                disableFocusRipple: true,
+                disableTouchRipple: true
+            }
+        },
+        MuiList: {
+            styleOverrides: {
+                root: {
+                    padding: '8px',
+                }
+            }
+        },
+        MuiPaper: {
+            defaultProps: {
+                elevation: 3
+            }
+        },
+        MuiCheckbox: {
+            defaultProps: {
+                disableRipple: true,
+                disableTouchRipple: true,
+                disableFocusRipple: true
+            }
         }
     },
     palette: {
@@ -25,6 +77,7 @@ export const theme = createTheme({
             primary: '#333333',
             secondary: '#F5F5F5',
         },
+        divider: alpha('#F5F5F5', 0.08)
     },
     typography: {
         fontFamily: 'Open Sans',

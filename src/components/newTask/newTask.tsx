@@ -103,9 +103,6 @@ export const NewTask: FC<TNewTaskProps> = ({
             size={'large'}
             variant={'contained'}
             disabled={!text}
-            disableRipple
-            disableTouchRipple
-            disableFocusRipple
             sx={buttonStyle}
             onClick={onAdd}
         >

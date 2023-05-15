@@ -37,7 +37,6 @@ export const Task: FC<TTaskProps> = ({
         <Checkbox
             checked={!!doneDate}
             onChange={onToggle}
-            disableRipple
             color={'success'}
             checkedIcon={<CheckBoxRoundedIcon />}
             icon={<CheckBoxOutlineBlankRoundedIcon />}

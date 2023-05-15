@@ -53,7 +53,7 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             }}
             open={!!anchor}
             onClose={onClose}
-            PaperProps={{ sx: menuStyle, elevation: 3 }}
+            PaperProps={{ sx: menuStyle }}
         >
             <TaskAction
                 label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
@@ -70,9 +70,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             />
         </Menu>
         <IconButton
-            disableRipple
-            disableTouchRipple
-            disableFocusRipple
             sx={{ ...actionsStyle, ...(anchor ? openStyle : null) }}
             color={'secondary'}
             onClick={onOpen}

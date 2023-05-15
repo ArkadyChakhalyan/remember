@@ -15,9 +15,6 @@ export const MenuBarItem: FC<TMenuBarItemProps> = ({
         size={'large'}
         startIcon={icon}
         sx={buttonStyle}
-        disableRipple
-        disableTouchRipple
-        disableFocusRipple
         variant={active ? 'contained' : 'text'}
         onClick={onClick}
     >

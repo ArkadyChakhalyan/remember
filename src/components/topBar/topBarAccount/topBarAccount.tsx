@@ -29,9 +29,6 @@ export const TopBarAccount = () => {
                 <IconButton
                     onClick={onOpen}
                     sx={buttonStyle}
-                    disableRipple
-                    disableTouchRipple
-                    disableFocusRipple
                 >
                     <Avatar
                         alt={'Arkady Chakhalyan'}
@@ -53,13 +50,11 @@ export const TopBarAccount = () => {
                 }}
                 open={!!anchor}
                 onClose={onClose}
-                PaperProps={{ sx: menuStyle, elevation: 3 }}
+                PaperProps={{ sx: menuStyle }}
             >
                 <MenuItem
                     onClick={null}
-                    disableRipple
-                    disableTouchRipple
-                    sx={{ height: theme.spacing(5.5), px: 3 }}
+                    sx={itemStyle}
                 >
                     <Typography color={'secondary'}>
                         {TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT}
@@ -67,9 +62,7 @@ export const TopBarAccount = () => {
                 </MenuItem>
                 <MenuItem
                     onClick={null}
-                    disableRipple
-                    disableTouchRipple
-                    sx={{ height: theme.spacing(5.5), px: 3 }}
+                    sx={itemStyle}
                 >
                     <Typography color={'secondary'}>
                         {TOP_BAR_ACCOUNT_SETTINGS_LOGOUT}
@@ -118,4 +111,10 @@ const popperStyle = {
     [theme.breakpoints.down('xs')]: {
         pt: 2.25,
     }
+};
+
+const itemStyle = {
+    height: theme.spacing(5.5),
+    px: 2.5,
+    borderRadius: theme.shape.borderRadius * 3
 };
