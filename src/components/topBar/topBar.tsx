@@ -73,18 +73,14 @@ const containerStyle = {
         gap: 2,
     },
     [theme.breakpoints.down('sm')]: {
+        height: theme.spacing(9.5),
+        px: 2,
+        pt: 2.5,
+        boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2.25)} ${alpha(theme.palette.primary.main, 0.8)}`,
         '&:before': {
             display: 'none'
         }
     },
-    [theme.breakpoints.down('xs')]: {
-        height: theme.spacing(11),
-        px: 1.5,
-        '&:before': {
-            left: theme.spacing(1.5),
-            width: `calc(100% - ${theme.spacing(3)})`,
-        }
-    }
 };
 
 const notificationsStyle = {
@@ -108,10 +104,7 @@ const actionsStyle = {
     gap: 2,
     [theme.breakpoints.down('sm')]: {
         position: 'absolute',
-        left: theme.spacing(5.25),
+        left: theme.spacing(2.75),
         gap: 0.5
     },
-    [theme.breakpoints.down('xs')]: {
-        left: theme.spacing(2.75),
-    }
 };

@@ -1,4 +1,4 @@
-import { alpha, ClickAwayListener, Stack } from '@mui/material';
+import { alpha, Box, ClickAwayListener, Stack } from '@mui/material';
 import { Logo } from '../logo/logo';
 import { MENU_BAR_LOGOUT_LABEL, MENU_BAR_OPTIONS } from './constants';
 import { useLocation } from 'react-router-dom';
@@ -82,14 +82,14 @@ const containerStyle = {
         py: 0,
         background: theme.palette.secondary.main,
         borderRadius: theme.shape.borderRadius * 7,
-        boxShadow: `0 0 ${theme.spacing(3)} ${alpha(theme.palette.common.black, 0.3)}`,
+        boxShadow: `0 ${theme.spacing(4)} ${theme.spacing(3)} ${theme.spacing(8)} ${alpha(theme.palette.primary.main, 0.8)}`,
         transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
         '& > div:first-of-type': {
             display: 'none'
         },
         'a': {
             width: 'fit-content !important',
-        }
+        },
     },
     [theme.breakpoints.down('xs')]: {
         left: theme.spacing(1.5),
@@ -100,6 +100,16 @@ const containerStyle = {
         px: 1.5,
         borderRadius: theme.shape.borderRadius * 5,
     }
+};
+
+const shadowStyle = {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: theme.spacing(19.5),
+    background: 'red',
+    zIndex: -1
 };
 
 const menuStyle = {

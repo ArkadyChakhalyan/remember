@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getTasks } from '../../../store/reducers/tasksReducer/selectors/getTasks';
 import { TaskList } from '../../../components/taskList/taskList';
-import { alpha, Breakpoint, Stack, Tab, Tabs } from '@mui/material';
+import { Stack, Tab, Tabs } from '@mui/material';
 import { theme } from '../../../style/theme';
 import React, { useEffect, useState } from 'react';
 import { DASHBOARDS_TASK_LIST_TAB } from './contants';
@@ -13,8 +13,8 @@ export const DashboardTasks = () => {
 
     useEffect(() => {
         const onResize = () => {
-            if (tab.hideAt && window.innerWidth <= theme.breakpoints.values[tab.hideAt as Breakpoint]) {
-                setTab(DASHBOARDS_TASK_LIST_TAB[0]);
+            if (tab.hideAt && window.innerWidth <= tab.hideAt) {
+                setTab(DASHBOARDS_TASK_LIST_TAB[2]);
             }
         };
         window.addEventListener('resize', onResize);
@@ -34,7 +34,7 @@ export const DashboardTasks = () => {
                         sx={{
                             ...tabStyle,
                             ...(tab.hideAt ? {
-                                [theme.breakpoints.down(tab.hideAt as Breakpoint)]: {
+                                [theme.breakpoints.down(tab.hideAt)]: {
                                     display: 'none'
                                 }
                             } : null)
@@ -62,9 +62,10 @@ const containerStyle = {
     },
     [theme.breakpoints.down('md')]: {
         width: 'unset',
-        height: '60%',
     },
     [theme.breakpoints.down('sm')]: {
+        height: 'unset',
+        minHeight: theme.spacing(48),
         p: 2,
         pt: 0
     }

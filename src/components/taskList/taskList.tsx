@@ -43,7 +43,7 @@ export const TaskList: FC<TTaskListProps> = ({
 
 const containerStyle = {
     position: 'relative',
-    height: 1,
+    flexGrow: 1,
     '&:after': {
         content: '""',
         minHeight: theme.spacing(0.25)
@@ -59,6 +59,7 @@ const textStyle = {
     fontWeight: 500,
     userSelect: 'none',
     color: alpha(theme.palette.secondary.main, 0.2),
+    whiteSpace: 'nowrap',
     [theme.breakpoints.down('sm')]: {
         fontSize: '1.2rem',
     }

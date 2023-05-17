@@ -16,7 +16,7 @@ export const DASHBOARDS_TASK_LIST_TAB = [
         sort: (tasks: ITask[]) => {
             return tasks.filter(task => task.date <= getTaskDateByLabel(ETaskDate.THIS_WEEK));
         },
-        hideAt: 500
+        hideAt: 470
     },
     {
         label: ETaskListTab.THIS_MONTH,
@@ -30,6 +30,6 @@ export const DASHBOARDS_TASK_LIST_TAB = [
         sort: (tasks: ITask[]) => {
             return tasks.filter(task => new Date(task.date).getFullYear() <= new Date().getFullYear());
         },
-        hideAt: 'lg'
+        hideAt: 1000
     },
 ];

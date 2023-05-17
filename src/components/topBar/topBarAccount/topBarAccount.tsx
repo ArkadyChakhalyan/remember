@@ -88,14 +88,10 @@ const menuStyle = {
     bgcolor: theme.palette.primary.light,
     [theme.breakpoints.down('sm')]: {
         maxWidth: 'unset',
-        width: `calc(100% - ${theme.spacing(8)})`,
-        ml: 2,
+        width: `calc(100% - ${theme.spacing(3)})`,
+        ml: -0.5,
         mt: 2.5,
     },
-    [theme.breakpoints.down('xs')]: {
-        width: `calc(100% - ${theme.spacing(3)})`,
-        ml: -0.5
-    }
 };
 
 const buttonStyle = {
