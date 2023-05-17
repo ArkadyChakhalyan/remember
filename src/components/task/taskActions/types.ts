@@ -1,5 +1,8 @@
-import { ITask } from '../../../store/reducers/tasksReducer/types';
+import { ITask, TTaskPriority } from '../../../types/types';
 
 export type TTaskActionsProps = {
     task: ITask;
+    onDateChange: (date: number) => void;
+    onDelete: () => void;
+    onPriorityChange: (priority: TTaskPriority) => void;
 }

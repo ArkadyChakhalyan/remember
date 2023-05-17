@@ -1,4 +1,4 @@
-import { TTaskPriority } from '../../../store/reducers/tasksReducer/types';
+import { TTaskPriority } from '../../../types/types';
 
 export type TNewTaskPriorityProps = {
     priority: TTaskPriority;

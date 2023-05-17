@@ -25,7 +25,7 @@ export const DashboardTasks = () => {
         <Tabs
             value={tab}
             onChange={(e, tab) => setTab(tab)}
-            sx={{ borderBottom: 1, borderColor: 'divider' }}
+            sx={tabsStyle}
         >
             {
                 DASHBOARDS_TASK_LIST_TAB.map(tab => (
@@ -45,7 +45,7 @@ export const DashboardTasks = () => {
                 ))
             }
         </Tabs>
-        <TaskList tasks={tab.sort ? tab.sort(tasks) : tasks} />
+        <TaskList tasks={tab.sort ? tab.sort(tasks) : tasks} tab={tab.label} />
     </Stack>;
 }
 
@@ -53,9 +53,9 @@ const containerStyle = {
     height: '50%',
     width: '60%',
     p: 3,
-    pt: 2,
-    overflow: 'hidden',
-    bgcolor: alpha(theme.palette.primary.light, 0.2),
+    pt: 0,
+    overflow: 'auto',
+    bgcolor: theme.palette.background.default,
     borderRadius: theme.shape.borderRadius * 4,
     '.MuiTabs-indicator': {
         background: theme.palette.secondary.main
@@ -66,6 +66,19 @@ const containerStyle = {
     },
     [theme.breakpoints.down('sm')]: {
         p: 2,
+        pt: 0
+    }
+};
+
+const tabsStyle = {
+    position: 'sticky',
+    top: 0,
+    pt: 1.75,
+    borderBottom: 1,
+    borderColor: 'divider',
+    background: theme.palette.background.default,
+    zIndex: 1,
+    [theme.breakpoints.down('sm')]: {
         pt: 0.75
     },
     [theme.breakpoints.down('xs')]: {

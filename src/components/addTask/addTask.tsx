@@ -46,7 +46,10 @@ export const AddTask = () => {
         setOpen(true);
     };
 
-    const onMouseLeave = (e: React.MouseEvent, paper?: boolean) => {
+    const onMouseLeave = (
+        e: React.MouseEvent,
+        paper?: boolean
+    ) => {
         if (paper) {
             setPaperHover(false);
         }

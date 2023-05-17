@@ -1,5 +1,5 @@
 import { IAppState } from '../../../types';
-import { ITask } from '../types';
+import { ITask } from '../../../../types/types';
 
 export const getTasks = (
     state: IAppState

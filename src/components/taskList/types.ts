@@ -1,5 +1,6 @@
-import { ITask } from '../../store/reducers/tasksReducer/types';
+import { ETaskListTab, ITask } from '../../types/types';
 
 export type TTaskListProps = {
+    tab: ETaskListTab;
     tasks: ITask[];
 }

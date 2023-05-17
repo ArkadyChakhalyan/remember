@@ -77,6 +77,9 @@ export const theme = createTheme({
             primary: '#333333',
             secondary: '#F5F5F5',
         },
+        background: {
+            default: '#3c3c3c'
+        },
         divider: alpha('#F5F5F5', 0.08)
     },
     typography: {

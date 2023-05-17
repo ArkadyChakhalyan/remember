@@ -1,5 +1,5 @@
 import { MenuItem, Select } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { TNewTaskDateProps } from './types';
 import { NEW_TASK_DATES } from './constants';
 import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
@@ -10,6 +10,14 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
     onChange
 }) => {
     const [options, setOptions] = useState([]);
+
+    const ref = useRef(null);
+
+    const onOpen = () => {
+        setTimeout(() => {
+            ref?.current?.querySelector('ul')?.focus();
+        }, 100);
+    };
 
     useEffect(() => {
         setOptions(NEW_TASK_DATES.map(item => {
@@ -28,9 +36,11 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
         id={'new-task-date'}
         value={date}
         onChange={e => onChange(Number(e.target.value))}
+        onOpen={onOpen}
         MenuProps={{
             sx: menuStyle,
             disablePortal: true,
+            disableAutoFocusItem: true,
             anchorOrigin: {
                 vertical: 'bottom',
                 horizontal: 'left',
@@ -38,7 +48,8 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
             transformOrigin: {
                 vertical: 'top',
                 horizontal: 'left',
-            }
+            },
+            ref
         }}
     >
         {options.map(({ label, value }) => (

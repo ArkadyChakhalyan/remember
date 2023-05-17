@@ -7,21 +7,27 @@ import { theme } from '../../../style/theme';
 import {
     TASK_ACTIONS_DATE_ADD,
     TASK_ACTIONS_DATE_CHANGE,
-    TASK_ACTIONS_DELETE,
+    TASK_ACTIONS_DELETE, TASK_ACTIONS_DUPLICATE,
     TASK_ACTIONS_PRIORITY_ADD,
     TASK_ACTIONS_PRIORITY_CHANGE
 } from './constants';
 import { TaskAction } from './taskAction/taskAction';
-import { deleteTaskAC } from '../../../store/reducers/tasksReducer/tasksReducer';
+import { addTaskAC, deleteTaskAC } from '../../../store/reducers/tasksReducer/tasksReducer';
+import { v4 as uuid } from 'uuid';
 
 export const TaskActions: FC<TTaskActionsProps> = ({
-    task
+    task,
+    onDateChange,
+    onDelete: onDeleteOwn,
+    onPriorityChange
 }) => {
     const {
         id,
         date,
         priority
     } = task;
+
+    const isNew = !id;
 
     const dispatch = useDispatch();
 
@@ -36,23 +42,44 @@ export const TaskActions: FC<TTaskActionsProps> = ({
     };
 
     const onDelete = () => {
-        dispatch(deleteTaskAC(id));
+        if (onDeleteOwn) {
+            onDeleteOwn();
+        } else {
+            dispatch(deleteTaskAC(id));
+        }
+    };
+
+    const onDuplicate = () => {
+        dispatch(addTaskAC({
+            ...task,
+            createDate: Date.now(),
+            id: uuid()
+        }));
+    };
+
+    const onEnter = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            onClose();
+        }
     };
 
     return <>
         <Menu
             anchorEl={anchor}
+            disablePortal
+            onClick={onClose}
+            onKeyDown={onEnter}
             anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}
-            keepMounted
             transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
             }}
             open={!!anchor}
             onClose={onClose}
+            disableAutoFocusItem
             PaperProps={{ sx: menuStyle }}
         >
             <TaskAction
@@ -62,6 +89,11 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             <TaskAction
                 label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
                 onClick={null}
+            />
+            <Divider />
+            <TaskAction
+                label={TASK_ACTIONS_DUPLICATE}
+                onClick={onDuplicate}
             />
             <Divider />
             <TaskAction
@@ -100,6 +132,6 @@ const openStyle = {
 const menuStyle = {
     mt: 0.5,
     ml: -1.5,
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: theme.shape.borderRadius * 3,
     bgcolor: theme.palette.primary.light,
 };

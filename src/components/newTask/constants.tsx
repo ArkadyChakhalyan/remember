@@ -1,4 +1,4 @@
-import { TTaskPriority } from '../../store/reducers/tasksReducer/types';
+import { TTaskPriority } from '../../types/types';
 
 export const NEW_TASK_PLACEHOLDER = 'I need to...';
 

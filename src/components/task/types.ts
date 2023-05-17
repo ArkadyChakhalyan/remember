@@ -1,5 +1,6 @@
-import { ITask } from '../../store/reducers/tasksReducer/types';
+import { ITask } from '../../types/types';
 
 export type TTaskProps = {
     task: ITask;
+    onClose?: () => void;
 }

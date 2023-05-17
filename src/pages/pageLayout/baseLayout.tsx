@@ -17,8 +17,12 @@ export const BaseLayout = () => {
 
 const containerStyle = {
     flexGrow: 1,
-    p: theme.spacing(4),
+    p: 4,
+    pt: 3.5,
+    [theme.breakpoints.down('sm')]: {
+        pt: 0,
+    },
     [theme.breakpoints.down('xs')]: {
-        p: theme.spacing(2),
+        p: 2,
     }
 }

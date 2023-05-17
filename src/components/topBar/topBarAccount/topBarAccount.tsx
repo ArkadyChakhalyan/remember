@@ -18,6 +18,12 @@ export const TopBarAccount = () => {
         setAnchor(null);
     };
 
+    const onEnter = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            onClose();
+        }
+    };
+
     return (
         <>
             <Tooltip
@@ -50,6 +56,8 @@ export const TopBarAccount = () => {
                 }}
                 open={!!anchor}
                 onClose={onClose}
+                onClick={onClose}
+                onKeyDown={onEnter}
                 PaperProps={{ sx: menuStyle }}
             >
                 <MenuItem

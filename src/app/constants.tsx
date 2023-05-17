@@ -1,6 +1,6 @@
-import { TTaskPriority } from '../store/reducers/tasksReducer/types';
 import { alpha } from '@mui/material';
 import { theme } from '../style/theme';
+import { TTaskPriority } from '../types/types';
 
 export const DEFAULT_TASK_PRIORITY = 0 as TTaskPriority;
 

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ITask, TTaskId, TTasksState } from './types';
+import { TTasksState } from './types';
+import { ITask, TTaskId } from '../../../types/types';
 
 const initialState: TTasksState = {};
 
@@ -28,7 +29,7 @@ export const tasksSlice = createSlice({
                 }
             };
         },
-        onEditTask: (state, action: PayloadAction<Partial<ITask>>) => {
+        editTaskAC: (state, action: PayloadAction<Partial<ITask>>) => {
             const task = action.payload;
             return {
                 ...state,
@@ -45,7 +46,7 @@ export const {
     addTaskAC,
     deleteTaskAC,
     toggleTaskAC,
-    onEditTask
+    editTaskAC
 } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

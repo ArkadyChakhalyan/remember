@@ -8,10 +8,10 @@ import { theme } from '../../style/theme';
 import { teal } from '@mui/material/colors';
 import { NewTaskDate } from './newTaskDate/newTaskDate';
 import { getTaskDateByLabel } from '../../helpers/getTaskDateByLabel';
-import { ETaskDate } from './newTaskDate/types';
 import { useDispatch } from 'react-redux';
 import { addTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
 import { v4 as uuid } from 'uuid';
+import { ETaskDate } from '../../types/types';
 
 export const NewTask: FC<TNewTaskProps> = ({
     preventClose,
@@ -24,25 +24,26 @@ export const NewTask: FC<TNewTaskProps> = ({
     const [date, setDate] = useState(getTaskDateByLabel(ETaskDate.THIS_MONTH));
 
     const onAdd = () => {
+        if (!text || !text.trim()) return;
         dispatch(addTaskAC({
             id: uuid(),
-            text,
+            createDate: Date.now(),
+            text: text.trim(),
             priority,
             date,
             doneDate: null
         }));
-        onClose();
+        setTimeout(onClose, 0); // wait for click on paper
     };
 
     const onKeyDown = (e: React.KeyboardEvent) => {
-        if (!text) return;
         if (e.key === 'Enter') {
             onAdd();
         }
     };
 
     const onInputKeyDown = (e: React.KeyboardEvent) => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && text && text.trim()) {
             e.stopPropagation();
             setText(text + '\n');
         } else if (e.key === 'Enter') {
