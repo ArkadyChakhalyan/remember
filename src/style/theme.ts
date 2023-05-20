@@ -65,7 +65,7 @@ export const theme = createTheme({
         }
     },
     palette: {
-        primary: { main: '#333333' },
+        primary: { main: '#2c2c2c' },
         secondary: { main: '#F5F5F5'},
         success: { main: '#2ECC71' },
         error: { main: '#E74C3C'},
@@ -73,12 +73,13 @@ export const theme = createTheme({
         pastelGreen: { main: '#A2D9CE'},
         pastelPink: { main: '#F5B7B1'},
         pastelYellow: { main: '#F9E79F'},
+        accentGreen: { main: '#b1fc65' },
         text: {
             primary: '#333333',
             secondary: '#F5F5F5',
         },
         background: {
-            default: '#3c3c3c'
+            default: '#3c3c3c',
         },
         divider: alpha('#F5F5F5', 0.08)
     },

@@ -1,7 +1,6 @@
 import { alpha, IconButton, Stack } from '@mui/material';
 import React, { FC } from 'react';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { teal } from '@mui/material/colors';
 import { theme } from '../../style/theme';
 import { TAddTaskButtonProps } from './types';
 
@@ -27,7 +26,7 @@ export const AddTaskButton: FC<TAddTaskButtonProps> = ({
 const buttonStyle = {
     height: theme.spacing(8),
     width: theme.spacing(8),
-    background: teal[500],
+    background: theme.palette.success.main,
     transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
     '.MuiSvgIcon-root': {
         color: theme.palette.secondary.main,

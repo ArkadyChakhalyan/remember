@@ -4,9 +4,10 @@ import { TTaskActionProps } from './types';
 
 export const TaskAction: FC<TTaskActionProps> = ({
     label,
-    onClick
+    onClick,
+    onEnter
 }) => (
-    <MenuItem onClick={onClick}>
+    <MenuItem onClick={onClick} onKeyDown={onEnter}>
         <Typography color={'secondary'}>
             {label}
         </Typography>

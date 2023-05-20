@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getTasks } from '../../../store/reducers/tasksReducer/selectors/getTasks';
 import { TaskList } from '../../../components/taskList/taskList';
-import { Stack, Tab, Tabs } from '@mui/material';
+import { alpha, Stack, Tab, Tabs } from '@mui/material';
 import { theme } from '../../../style/theme';
 import React, { useEffect, useState } from 'react';
 import { DASHBOARDS_TASK_LIST_TAB } from './contants';
@@ -9,12 +9,12 @@ import { DASHBOARDS_TASK_LIST_TAB } from './contants';
 export const DashboardTasks = () => {
     const tasks = useSelector(getTasks);
 
-    const [tab, setTab] = useState(DASHBOARDS_TASK_LIST_TAB[0]);
+    const [tab, setTab] = useState(DASHBOARDS_TASK_LIST_TAB[1]);
 
     useEffect(() => {
         const onResize = () => {
             if (tab.hideAt && window.innerWidth <= tab.hideAt) {
-                setTab(DASHBOARDS_TASK_LIST_TAB[2]);
+                setTab(DASHBOARDS_TASK_LIST_TAB[1]);
             }
         };
         window.addEventListener('resize', onResize);
@@ -50,6 +50,7 @@ export const DashboardTasks = () => {
 }
 
 const containerStyle = {
+    position: 'relative',
     height: '50%',
     width: '60%',
     p: 3,
@@ -59,6 +60,15 @@ const containerStyle = {
     borderRadius: theme.shape.borderRadius * 4,
     '.MuiTabs-indicator': {
         background: theme.palette.secondary.main
+    },
+    ':before': {
+        content: '""',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2.5)} ${alpha(theme.palette.background.default, 0.8)}`,
+
     },
     [theme.breakpoints.down('md')]: {
         width: 'unset',
@@ -78,6 +88,7 @@ const tabsStyle = {
     borderBottom: 1,
     borderColor: 'divider',
     background: theme.palette.background.default,
+    boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2.5)} ${alpha(theme.palette.background.default, 0.8)}`,
     zIndex: 1,
     [theme.breakpoints.down('sm')]: {
         pt: 0.75

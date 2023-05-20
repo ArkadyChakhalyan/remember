@@ -16,6 +16,8 @@ export const AddTask = () => {
 
     const ref = useRef(null);
     const paperRef = useRef(null);
+    const hoverRef = useRef(null);
+
     const onToggle = () => {
         setOpen(!open);
     };
@@ -41,9 +43,15 @@ export const AddTask = () => {
     const onMouseEnter = (paper?: boolean) => {
         if (paper) {
             setPaperHover(true);
+        } else {
+            hoverRef.current = true
         }
         if (keepOpen || open) return;
-        setOpen(true);
+        setTimeout(() => {
+            if (hoverRef.current) {
+                setOpen(true);
+            }
+        }, 400);
     };
 
     const onMouseLeave = (
@@ -52,6 +60,8 @@ export const AddTask = () => {
     ) => {
         if (paper) {
             setPaperHover(false);
+        } else {
+            hoverRef.current = false;
         }
         if (
             keepOpen ||

@@ -6,9 +6,11 @@ import { Dashboard } from '../pages/dashboard/dashboard';
 import { Route, Routes } from 'react-router-dom';
 import { BaseLayout } from '../pages/pageLayout/baseLayout';
 import { AdditionalLayout } from '../pages/pageLayout/additionalLayout';
+import { MainLoader } from '../mainLoader/mainLoader';
 
 export const App = () => {
     return <>
+        <MainLoader />
         <MenuBar />
         <Stack sx={containerStyle}>
             <Routes>

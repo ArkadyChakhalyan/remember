@@ -1,11 +1,10 @@
 import { alpha, IconButton } from '@mui/material';
 import React, { FC } from 'react';
-import { TNewTaskPriorityProps } from './types';
+import { TTaskPriorityProps } from './types';
 import { theme } from '../../../style/theme';
-import { teal } from '@mui/material/colors';
 import { PRIORITY_COLORS } from '../../../app/constants';
 
-export const NewTaskPriority: FC<TNewTaskPriorityProps> = ({
+export const TaskPriority: FC<TTaskPriorityProps> = ({
     priority,
     selected,
     onSelect
@@ -38,7 +37,7 @@ const style = {
     },
     '&:focus': {
         '&:before': {
-            borderColor: alpha(teal[500], 0.3),
+            borderColor: alpha(theme.palette.success.main, 0.3),
         }
     }
 };
@@ -46,6 +45,6 @@ const style = {
 const selectedStyle = {
     '&:before': {
         ...style['&:before'],
-        borderColor: `${teal[500]} !important`,
+        borderColor: `${theme.palette.success.main} !important`,
     }
 };

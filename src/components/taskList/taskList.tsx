@@ -44,10 +44,6 @@ export const TaskList: FC<TTaskListProps> = ({
 const containerStyle = {
     position: 'relative',
     flexGrow: 1,
-    '&:after': {
-        content: '""',
-        minHeight: theme.spacing(0.25)
-    }
 };
 
 const textStyle = {

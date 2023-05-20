@@ -5,7 +5,7 @@ import { TTaskPriority } from '../types/types';
 export const DEFAULT_TASK_PRIORITY = 0 as TTaskPriority;
 
 export const PRIORITY_COLORS = Object.freeze({
-    0: alpha(theme.palette.primary.main, 0.1),
+    0: alpha('#919191', 0.3),
     1: alpha(theme.palette.error.main, 0.25),
     2: alpha(theme.palette.error.main, 0.45),
     3: alpha(theme.palette.error.main, 0.7),

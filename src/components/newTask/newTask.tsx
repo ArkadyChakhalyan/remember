@@ -1,17 +1,16 @@
 import { alpha, Button, Stack, TextField } from '@mui/material';
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { NEW_TASK_PLACEHOLDER, NEW_TASK_PRIORITIES } from './constants';
+import { NEW_TASK_PLACEHOLDER } from './constants';
 import { TNewTaskProps } from './types';
-import { NewTaskPriority } from './newTaskPriority/newTaskPriority';
 import { DEFAULT_TASK_PRIORITY } from '../../app/constants';
 import { theme } from '../../style/theme';
-import { teal } from '@mui/material/colors';
 import { NewTaskDate } from './newTaskDate/newTaskDate';
 import { getTaskDateByLabel } from '../../helpers/getTaskDateByLabel';
 import { useDispatch } from 'react-redux';
 import { addTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
 import { v4 as uuid } from 'uuid';
 import { ETaskDate } from '../../types/types';
+import { TaskPriorities } from '../taskPriorities/taskPriorities';
 
 export const NewTask: FC<TNewTaskProps> = ({
     preventClose,
@@ -88,18 +87,7 @@ export const NewTask: FC<TNewTaskProps> = ({
             onKeyDown={onInputKeyDown}
             sx={inputStyle}
         />
-        <Stack sx={priorityStyle}>
-            {
-                NEW_TASK_PRIORITIES.map((value) => (
-                    <NewTaskPriority
-                        key={value}
-                        priority={value}
-                        selected={value === priority}
-                        onSelect={() => setPriority(value)}
-                    />
-                ))
-            }
-        </Stack>
+        <TaskPriorities priority={priority} onPriorityChange={setPriority} sx={priorityStyle} />
         <Button
             size={'large'}
             variant={'contained'}
@@ -132,13 +120,13 @@ const inputStyle = {
 
 const buttonStyle = {
     borderRadius: theme.shape.borderRadius * 3,
-    background: teal[500],
+    background: theme.palette.success.main,
     color: theme.palette.secondary.main,
     boxShadow: 'none',
     textTransform: 'none',
     '&:focus, &:hover': {
         boxShadow: `0 ${theme.spacing(0.25)} ${theme.spacing(0.75)} ${alpha(theme.palette.common.black, 0.3)}`,
-        background: teal[500],
+        background: theme.palette.success.main,
     },
     '&:disabled': {
         background: alpha(theme.palette.primary.main, 0.1),
@@ -146,8 +134,6 @@ const buttonStyle = {
 };
 
 const priorityStyle = {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     width: `calc(100% - ${theme.spacing(1.5)})`,
     ml: `${theme.spacing(0.75)} !important`
 };

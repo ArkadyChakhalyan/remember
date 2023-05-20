@@ -1,5 +1,5 @@
 import { alpha, Box, Checkbox, Stack, TextField } from '@mui/material';
-import React, { FC, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { TTaskProps } from './types';
 import { useDispatch } from 'react-redux';
 import { addTaskAC, editTaskAC, toggleTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
@@ -10,61 +10,63 @@ import { TaskActions } from './taskActions/taskActions';
 import { PRIORITY_COLORS } from '../../app/constants';
 import { NEW_TASK_PLACEHOLDER } from '../newTask/constants';
 import { v4 as uuid } from 'uuid';
+import { ITask, TTaskPriority } from '../../types/types';
 
 export const Task: FC<TTaskProps> = ({
     task,
     onClose
 }) => {
-    const {
-        id,
-        date,
-        doneDate,
-        text,
-        priority
-    } = task;
-
-    const isNew = !id;
+    const { id, text } = task;
 
     const dispatch = useDispatch();
 
     const [value, setValue] = useState(text);
-    const [newDoneDate, setNewDoneDate] = useState(null);
-    const [newPriority, setNewPriority] = useState(priority);
-    const [newDate, setNewDate] = useState(date);
     const [inputFocus, setInputFocus] = useState(null);
+    const [taskModel, setTaskModel] = useState(task);
 
     const ref = useRef(null);
     const inputRef = useRef(null);
+    const initialTaskRef = useRef(task);
+
+    const onTaskChange = (task: Partial<ITask>) => {
+        if (id) {
+            dispatch(editTaskAC({ id, ...task }))
+        } else {
+            setTaskModel({ ...taskModel, ...task });
+        }
+    };
+
+    const onDateChange = (date: number) => {
+        onTaskChange({ date });
+    };
+
+    const onPriorityChange = (priority: TTaskPriority) => {
+        onTaskChange({ priority });
+    };
 
     const onToggle = () => {
-        if (isNew) {
-            setNewDoneDate(newDoneDate ? null : Date.now());
-        } else {
+        if (id) {
             dispatch(toggleTaskAC(id));
+        } else {
+            onTaskChange({ doneDate: taskModel?.doneDate ? null : Date.now() });
         }
     };
 
     const onAdd = () => {
         if (!value || !value.trim()) return;
         dispatch(addTaskAC({
+            ...taskModel,
             id: uuid(),
             createDate: Date.now(),
             text: value.trim(),
-            priority: newPriority,
-            date: newDate,
-            doneDate: newDoneDate
         }));
         setValue('');
-        setNewDate(date);
-        setNewDoneDate(priority);
-        setNewDoneDate(null);
+        setTaskModel(initialTaskRef.current);
     };
 
     const onKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
-            if (isNew) {
-                onAdd();
-            } else {
+            if (id) {
                 if (inputFocus) {
                     onSave();
                     ref?.current?.focus();
@@ -72,6 +74,8 @@ export const Task: FC<TTaskProps> = ({
                     e.preventDefault();
                     inputRef?.current?.querySelector('textarea')?.focus();
                 }
+            } else {
+                onAdd();
             }
         }
         if (
@@ -83,29 +87,29 @@ export const Task: FC<TTaskProps> = ({
     };
 
     const onInputKeyDown = (e: React.KeyboardEvent) => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && value && value.trim()) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && value?.trim()) {
             e.stopPropagation();
             setValue(value + '\n');
         } else if (e.key === 'Enter') {
             e.preventDefault();
         } else if (e.key === 'Escape') {
-            if (isNew) {
-                onClose();
-            } else {
+            if (id) {
                 setValue(text);
+            } else {
+                onClose();
             }
         }
     };
 
     const onSave = () => {
-        if (!isNew && value.trim() !== text) {
+        if (id && value?.trim() !== text) {
             dispatch(editTaskAC({ id, text: value.trim() }));
         }
     };
 
     const onBlur = (e: React.FocusEvent) => {
         onSave();
-        if (!isNew || ref?.current?.contains(e.relatedTarget)) return;
+        if (id || ref?.current?.contains(e.relatedTarget)) return;
         onAdd();
         onClose();
     };
@@ -114,6 +118,10 @@ export const Task: FC<TTaskProps> = ({
         setValue(e.target.value);
     };
 
+    useEffect(() => {
+        setTaskModel(task);
+    }, [task]);
+
     return <Stack
         ref={ref}
         sx={containerStyle}
@@ -121,9 +129,9 @@ export const Task: FC<TTaskProps> = ({
         tabIndex={0}
         onBlur={onBlur}
     >
-        {!!priority && <Box sx={{ ...priorityStyle, bgcolor: PRIORITY_COLORS[priority] }} />}
+        {!!taskModel.priority && <Box sx={{ ...priorityStyle, bgcolor: PRIORITY_COLORS[taskModel.priority] }} />}
         <Checkbox
-            checked={!!doneDate || !!newDoneDate}
+            checked={!!taskModel.doneDate}
             onChange={onToggle}
             color={'success'}
             checkedIcon={<CheckBoxRoundedIcon />}
@@ -135,9 +143,9 @@ export const Task: FC<TTaskProps> = ({
             onChange={onInputChange}
             variant={'standard'}
             id={'task-input'}
-            sx={{ ...inputStyle, ...(value && (doneDate || newDoneDate) ? doneStyle : null) }}
+            sx={{ ...inputStyle, ...(value && !!taskModel.doneDate ? doneStyle : null) }}
             fullWidth
-            autoFocus={isNew}
+            autoFocus={!id}
             autoComplete={'off'}
             multiline
             placeholder={NEW_TASK_PLACEHOLDER}
@@ -147,10 +155,10 @@ export const Task: FC<TTaskProps> = ({
             InputProps={{ ref: inputRef }}
         />
         <TaskActions
-            task={task}
+            task={taskModel}
             onDelete={onClose}
-            onDateChange={setNewDate}
-            onPriorityChange={setNewPriority}
+            onDateChange={onDateChange}
+            onPriorityChange={onPriorityChange}
         />
     </Stack>;
 };
