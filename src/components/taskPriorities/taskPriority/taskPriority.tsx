@@ -9,8 +9,15 @@ export const TaskPriority: FC<TTaskPriorityProps> = ({
     selected,
     onSelect
 }) => {
+    const onEnter = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            onSelect(e);
+        }
+    };
+
     return <IconButton
         onClick={onSelect}
+        onKeyDown={onEnter}
         sx={{
             ...style,
             ...(selected ? selectedStyle : null),

@@ -1,20 +1,25 @@
 import { alpha, Button, Stack, Typography } from '@mui/material';
-import React, { FC, useState } from 'react';
-import { TTaskListProps } from './types';
+import React, { useState } from 'react';
 import { Task } from '../task/task';
 import { TASK_LIST_ADD, TASK_LIST_EMPTY } from './constants';
 import { theme } from '../../style/theme';
 import { DEFAULT_TASK_PRIORITY } from '../../app/constants';
-import { getTaskDateByTab } from './helpers/getTaskDateByTab';
+import { getTaskDateByTab } from '../../helpers/getTaskDateByTab';
+import { getTasksSortedByTab } from './helpers/getTasksSortedByTab';
+import { useSelector } from 'react-redux';
+import { getDashboardTaskListTab } from '../../store/reducers/dashboardReducer/selectors/getDashboardTaskListTab';
+import { getTasks } from '../../store/reducers/tasksReducer/selectors/getTasks';
 
-export const TaskList: FC<TTaskListProps> = ({
-    tab,
-    tasks
-}) => {
+export const TaskList = () => {
     const [show, setShow] = useState(null);
 
+    const tab = useSelector(getDashboardTaskListTab);
+    const tasks = useSelector(getTasks);
+
+    const tasksToShow = getTasksSortedByTab(tasks, tab);
+
     return <Stack spacing={0.25} sx={containerStyle}>
-        {!!tasks.length && tasks.map(task => (<Task key={task.id} task={task} />))}
+        {!!tasksToShow.length && tasksToShow.map(task => (<Task key={task.id} task={task} />))}
         {show &&
             <Task
                 task={{
@@ -37,7 +42,7 @@ export const TaskList: FC<TTaskListProps> = ({
         >
             {TASK_LIST_ADD}
         </Button>
-        {!tasks.length && <Typography sx={textStyle}>{TASK_LIST_EMPTY}</Typography>}
+        {!tasksToShow.length && <Typography sx={textStyle}>{TASK_LIST_EMPTY}</Typography>}
     </Stack>;
 };
 

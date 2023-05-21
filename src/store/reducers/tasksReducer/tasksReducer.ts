@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TTasksState } from './types';
+import { ITasksState } from './types';
 import { ITask, TTaskId } from '../../../types/types';
 
-const initialState: TTasksState = {};
+const initialState: ITasksState = {};
 
 export const tasksSlice = createSlice({
     name: 'tasks',

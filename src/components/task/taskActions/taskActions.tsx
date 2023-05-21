@@ -19,6 +19,11 @@ import { addTaskAC, deleteTaskAC } from '../../../store/reducers/tasksReducer/ta
 import { v4 as uuid } from 'uuid';
 import { TaskPriorities } from '../../taskPriorities/taskPriorities';
 import { TTaskPriority } from '../../../types/types';
+import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
+import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
+import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
+import SubdirectoryArrowRightRoundedIcon from '@mui/icons-material/SubdirectoryArrowRightRounded';
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 
 export const TaskActions: FC<TTaskActionsProps> = ({
     task,
@@ -28,11 +33,7 @@ export const TaskActions: FC<TTaskActionsProps> = ({
 }) => {
     const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-    const {
-        id,
-        date,
-        priority
-    } = task;
+    const { id, date, priority } = task;
 
     const dispatch = useDispatch();
 
@@ -59,7 +60,10 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         onClose();
     };
 
-    const onPrioritySelect = (priority: TTaskPriority) => {
+    const onPrioritySelect = (
+        e: React.KeyboardEvent | React.MouseEvent,
+        priority: TTaskPriority
+    ) => {
         onPriorityChange(priority);
         onClose();
     };
@@ -86,57 +90,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         }
     };
 
-    const actionsList = <Stack>
-        {(dateEdit || priorityEdit) &&
-            <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
-                <IconButton
-                    color={'secondary'}
-                    onClick={() => setPriorityEdit(false)}
-                >
-                    <ChevronLeftRoundedIcon />
-                </IconButton>
-                <Typography color={'secondary'}>Priority</Typography>
-            </Stack>
-        }
-        {dateEdit && <div></div>}
-        {priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />}
-        {!priorityEdit && !dateEdit &&
-            <TaskAction
-                label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
-                onClick={() => setDateEdit(true)}
-            />
-        }
-        {!priorityEdit && !dateEdit &&
-            <TaskAction
-                label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
-                onClick={() => setPriorityEdit(true)}
-            />
-        }
-        {!priorityEdit && !dateEdit && id && <Divider />}
-        {!priorityEdit && !dateEdit && id &&
-            <TaskAction
-                label={TASK_ACTIONS_SUB_TASK}
-                onClick={() => onMenuItemClick(null)}
-                onEnter={onEnter}
-            />
-        }
-        {!priorityEdit && !dateEdit && id &&
-            <TaskAction
-                label={TASK_ACTIONS_DUPLICATE}
-                onClick={() => onMenuItemClick(onDuplicate)}
-                onEnter={onEnter}
-            />
-        }
-        {!priorityEdit &&  !dateEdit && <Divider />}
-        {!priorityEdit && !dateEdit &&
-            <TaskAction
-                label={TASK_ACTIONS_DELETE}
-                onClick={() => onMenuItemClick(onDelete)}
-                onEnter={onEnter}
-            />
-        }
-    </Stack>;
-
     const menu = window.innerWidth >= 600 ?
         <Menu
             anchorEl={anchor}
@@ -154,18 +107,125 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             disableAutoFocusItem
             PaperProps={{ sx: menuStyle }}
         >
-            {actionsList}
+            {(dateEdit || priorityEdit) &&
+                <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
+                    <IconButton
+                        color={'secondary'}
+                        onClick={() => setPriorityEdit(false)}
+                    >
+                        <ChevronLeftRoundedIcon />
+                    </IconButton>
+                    <Typography color={'secondary'}>Priority</Typography>
+                </Stack>
+            }
+            {dateEdit && <div></div>}
+            {priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />}
+            {!priorityEdit && !dateEdit &&
+                <TaskAction
+                    label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
+                    icon={<EventNoteRoundedIcon />}
+                    onClick={() => setDateEdit(true)}
+                />
+            }
+            {!priorityEdit && !dateEdit &&
+                <TaskAction
+                    label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
+                    onClick={() => setPriorityEdit(true)}
+                    icon={<ErrorOutlineRoundedIcon />}
+                />
+            }
+            {!priorityEdit && !dateEdit && id && <Divider />}
+            {!priorityEdit && !dateEdit && id &&
+                <TaskAction
+                    label={TASK_ACTIONS_SUB_TASK}
+                    icon={<SubdirectoryArrowRightRoundedIcon />}
+                    onClick={() => onMenuItemClick(null)}
+                    onEnter={onEnter}
+                />
+            }
+            {!priorityEdit && !dateEdit && id &&
+                <TaskAction
+                    label={TASK_ACTIONS_DUPLICATE}
+                    icon={<ContentCopyRoundedIcon />}
+                    onClick={() => onMenuItemClick(onDuplicate)}
+                    onEnter={onEnter}
+                />
+            }
+            {!priorityEdit &&  !dateEdit && <Divider />}
+            {!priorityEdit && !dateEdit &&
+                <TaskAction
+                    color={theme.palette.error.main}
+                    label={TASK_ACTIONS_DELETE}
+                    icon={<DeleteOutlineRoundedIcon />}
+                    onClick={() => onMenuItemClick(onDelete)}
+                    onEnter={onEnter}
+                />
+            }
         </Menu>
         : <SwipeableDrawer
             anchor={'bottom'}
             open={!!anchor}
             onClose={onClose}
-            onOpen={null}
+            onOpen={() => {}}
             PaperProps={{ sx: drawerStyle }}
             disableBackdropTransition={!iOS}
             disableDiscovery={iOS}
+            disablePortal
         >
-            {actionsList}
+            {(dateEdit || priorityEdit) &&
+                <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
+                    <IconButton
+                        color={'secondary'}
+                        onClick={() => setPriorityEdit(false)}
+                    >
+                        <ChevronLeftRoundedIcon />
+                    </IconButton>
+                    <Typography color={'secondary'}>Priority</Typography>
+                </Stack>
+            }
+            {dateEdit && <div></div>}
+            {priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />}
+            {!priorityEdit && !dateEdit &&
+                <TaskAction
+                    label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
+                    icon={<EventNoteRoundedIcon />}
+                    onClick={() => setDateEdit(true)}
+                />
+            }
+            {!priorityEdit && !dateEdit &&
+                <TaskAction
+                    label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
+                    icon={<ErrorOutlineRoundedIcon />}
+                    onClick={() => setPriorityEdit(true)}
+                />
+            }
+            {!priorityEdit && !dateEdit && id && <Divider />}
+            {!priorityEdit && !dateEdit && id &&
+                <TaskAction
+                    label={TASK_ACTIONS_SUB_TASK}
+                    icon={<SubdirectoryArrowRightRoundedIcon />}
+                    onClick={() => onMenuItemClick(null)}
+                    onEnter={onEnter}
+                />
+            }
+            {!priorityEdit && !dateEdit && id &&
+                <TaskAction
+                    label={TASK_ACTIONS_DUPLICATE}
+                    onClick={() => onMenuItemClick(onDuplicate)}
+                    icon={<ContentCopyRoundedIcon />}
+                    onEnter={onEnter}
+                />
+            }
+            {!priorityEdit &&  !dateEdit && <Divider />}
+            {!priorityEdit && !dateEdit &&
+                <TaskAction
+                    color={theme.palette.error.main}
+                    label={TASK_ACTIONS_DELETE}
+                    icon={<DeleteOutlineRoundedIcon />}
+                    onClick={() => onMenuItemClick(onDelete)}
+                    onEnter={onEnter}
+                />
+            }
         </SwipeableDrawer>;
 
     return <>
@@ -181,6 +241,7 @@ export const TaskActions: FC<TTaskActionsProps> = ({
 };
 
 const buttonStyle = {
+    height: 1,
     color: alpha(theme.palette.secondary.main, 0.6),
     transition: theme.transitions.create(['color', 'opacity']),
     transform: 'rotate(90deg)',
@@ -208,7 +269,8 @@ const menuStyle = {
 };
 
 const drawerStyle = {
-    background: theme.palette.primary.main
+    background: theme.palette.primary.main,
+    py: 1,
 };
 
 const priorityStyle = {

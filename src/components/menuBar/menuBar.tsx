@@ -34,7 +34,7 @@ export const MenuBar = () => {
                         MENU_BAR_OPTIONS.map(item => (
                             <MenuBarItem
                                 key={item.link}
-                                active={location.pathname.includes((item.link))}
+                                active={location.pathname.includes(('/' + item.link))}
                                 icon={item.icon}
                                 label={item.label}
                                 link={item.link}

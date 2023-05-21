@@ -2,25 +2,34 @@ import { alpha, Button, Stack, TextField } from '@mui/material';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { NEW_TASK_PLACEHOLDER } from './constants';
 import { TNewTaskProps } from './types';
-import { DEFAULT_TASK_PRIORITY } from '../../app/constants';
+import { DEFAULT_TASK_PRIORITY, ROUTE_DASHBOARD } from '../../app/constants';
 import { theme } from '../../style/theme';
 import { NewTaskDate } from './newTaskDate/newTaskDate';
 import { getTaskDateByLabel } from '../../helpers/getTaskDateByLabel';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
 import { v4 as uuid } from 'uuid';
-import { ETaskDate } from '../../types/types';
+import { ETaskDate, ETaskListTab, TTaskPriority } from '../../types/types';
 import { TaskPriorities } from '../taskPriorities/taskPriorities';
+import { getDashboardTaskListTab } from '../../store/reducers/dashboardReducer/selectors/getDashboardTaskListTab';
+import { useLocation } from 'react-router-dom';
+import { getTaskDateByTab } from '../../helpers/getTaskDateByTab';
+import { setUnseenTaskDateAC } from '../../store/reducers/dashboardReducer/dashboardReducer';
 
 export const NewTask: FC<TNewTaskProps> = ({
     preventClose,
     onClose
 }) => {
     const dispatch = useDispatch();
+    const location = useLocation();
+
+    const tab = useSelector(getDashboardTaskListTab);
 
     const [text, setText] = useState('');
     const [priority, setPriority] = useState(DEFAULT_TASK_PRIORITY);
     const [date, setDate] = useState(getTaskDateByLabel(ETaskDate.THIS_MONTH));
+
+    const inputRef = useRef(null);
 
     const onAdd = () => {
         if (!text || !text.trim()) return;
@@ -32,6 +41,15 @@ export const NewTask: FC<TNewTaskProps> = ({
             date,
             doneDate: null
         }));
+        if (
+            location.pathname.includes((ROUTE_DASHBOARD)) &&
+            (tab !== ETaskListTab.ALL && (date > getTaskDateByTab(tab) || !date))
+        ) {
+           dispatch(setUnseenTaskDateAC(!date ?
+               Date.now() * Date.now() // random big number to highlight 'all' when no date selected
+               : date)
+           );
+        }
         setTimeout(onClose, 0); // wait for click on paper
     };
 
@@ -50,7 +68,17 @@ export const NewTask: FC<TNewTaskProps> = ({
         }
     };
 
-    const inputRef = useRef(null);
+    const onPriorityChange = (
+        e: React.KeyboardEvent | React.MouseEvent,
+        priority: TTaskPriority
+    ) => {
+        const { key } = e as React.KeyboardEvent;
+        if (key === 'Enter') {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        setPriority(priority);
+    };
 
     useEffect(() => {
         setTimeout(() => {
@@ -87,7 +115,7 @@ export const NewTask: FC<TNewTaskProps> = ({
             onKeyDown={onInputKeyDown}
             sx={inputStyle}
         />
-        <TaskPriorities priority={priority} onPriorityChange={setPriority} sx={priorityStyle} />
+        <TaskPriorities priority={priority} onPriorityChange={onPriorityChange} sx={priorityStyle} />
         <Button
             size={'large'}
             variant={'contained'}
@@ -129,7 +157,7 @@ const buttonStyle = {
         background: theme.palette.success.main,
     },
     '&:disabled': {
-        background: alpha(theme.palette.primary.main, 0.1),
+        background: alpha(theme.palette.success.main, 0.3),
     }
 };
 

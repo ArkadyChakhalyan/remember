@@ -1,5 +1,5 @@
-import { ETaskDate, ETaskListTab } from '../../../types/types';
-import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
+import { ETaskDate, ETaskListTab } from '../types/types';
+import { getTaskDateByLabel } from './getTaskDateByLabel';
 
 export const getTaskDateByTab = (
     tab: ETaskListTab

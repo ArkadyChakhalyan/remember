@@ -6,7 +6,6 @@ import { TaskPriority } from './taskPriority/taskPriority';
 import { TASK_PRIORITIES } from './constants';
 import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles/createTheme';
-import { TTaskPriority } from '../../types/types';
 import { DEFAULT_TASK_PRIORITY } from '../../app/constants';
 
 export const TaskPriorities: FC<TTaskPrioritiesProps> = ({
@@ -21,7 +20,7 @@ export const TaskPriorities: FC<TTaskPrioritiesProps> = ({
                     key={value}
                     priority={value}
                     selected={value === priority}
-                    onSelect={() => onPriorityChange(value === priority ? DEFAULT_TASK_PRIORITY : value)}
+                    onSelect={e => onPriorityChange(e, value === priority ? DEFAULT_TASK_PRIORITY : value)}
                 />
             ))
         }

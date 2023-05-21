@@ -1,5 +1,5 @@
 import { ITask } from '../../../types/types';
 
-export type TTasksState = {
+export interface ITasksState {
     [key: string]: ITask
 }

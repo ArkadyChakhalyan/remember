@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { alpha, Fade, keyframes, Stack, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Fade, Stack, Typography } from '@mui/material';
 import { Logo } from '../components/logo/logo';
 import { theme } from '../style/theme';
 
@@ -9,7 +9,7 @@ export const MainLoader = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 2000);
+        }, 1000);
     }, []);
 
     return <Fade in={loading} timeout={400} appear={false}>
@@ -27,18 +27,16 @@ const containerStyle = {
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 10000,
-    background: theme.palette.accentGreen.main
+    background: theme.palette.success.light
 };
 
 const iconStyle = {
     width: 1,
-    height: theme.spacing(10),
+    height: theme.spacing(11.5),
     [theme.breakpoints.down('sm')]: {
-        height: theme.spacing(8),
+        height: 'unset',
+        width: '70%',
     },
-    [theme.breakpoints.down('xs')]: {
-        height: theme.spacing(6),
-    }
 };
 
 const textStyle = {

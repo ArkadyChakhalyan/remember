@@ -2,27 +2,28 @@ import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 import ChecklistRoundedIcon from '@mui/icons-material/ChecklistRounded';
+import { ROUTE_CALENDAR, ROUTE_DASHBOARD, ROUTE_SETTINGS, ROUTE_TASKS } from '../../app/constants';
 
 export const MENU_BAR_OPTIONS = [
     {
         label: 'Dashboard',
         icon: <DashboardRoundedIcon />,
-        link: '/dashboard',
+        link: ROUTE_DASHBOARD,
     },
     {
         label: 'Tasks',
         icon: <ChecklistRoundedIcon />,
-        link: '/tasks'
+        link: ROUTE_TASKS
     },
     {
         label: 'Calendar',
         icon: <EventNoteRoundedIcon />,
-        link: '/calendar'
+        link: ROUTE_CALENDAR
     },
     {
         label: 'Settings',
         icon: <SettingsRoundedIcon />,
-        link: '/settings'
+        link: ROUTE_SETTINGS
     },
 ];
 

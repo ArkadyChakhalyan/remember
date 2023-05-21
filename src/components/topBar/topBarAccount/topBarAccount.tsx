@@ -1,14 +1,19 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { Avatar, IconButton, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import { theme } from '../../../style/theme';
 import {
     TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT,
-    TOP_BAR_ACCOUNT_SETTINGS_LOGOUT,
+    TOP_BAR_ACCOUNT_SETTINGS_LOGOUT, TOP_BAR_ACCOUNT_SETTINGS_NOTIFICATIONS,
     TOP_BAR_ACCOUNT_TOOLTIP
 } from './constants';
+import { TopBarAccountMenuItem } from '../topBarAccountMenuItem/topBarAccountMenuItem';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 
 export const TopBarAccount = () => {
-    const [anchor, setAnchor] = useState<null | HTMLElement>(null);
+    const [anchor, setAnchor] = useState(null);
+    const [mobile, setMobile] = useState(null);
 
     const onOpen = (e: MouseEvent<HTMLElement>) => {
         setAnchor(e.currentTarget);
@@ -24,6 +29,17 @@ export const TopBarAccount = () => {
         }
     };
 
+    useEffect(() => {
+        const onResize = () => {
+            setMobile(window.innerWidth < 600); // breakpoint SM
+        };
+
+        onResize();
+
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
+
     return (
         <>
             <Tooltip
@@ -31,6 +47,7 @@ export const TopBarAccount = () => {
                 PopperProps={{ sx: popperStyle }}
                 enterDelay={200}
                 enterNextDelay={200}
+                disableInteractive
             >
                 <IconButton
                     onClick={onOpen}
@@ -60,22 +77,23 @@ export const TopBarAccount = () => {
                 onKeyDown={onEnter}
                 PaperProps={{ sx: menuStyle }}
             >
-                <MenuItem
+                {mobile &&
+                    <TopBarAccountMenuItem
+                        label={TOP_BAR_ACCOUNT_SETTINGS_NOTIFICATIONS}
+                        icon={<NotificationsRoundedIcon />}
+                        onClick={null}
+                    />
+                }
+                <TopBarAccountMenuItem
+                    label={TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT}
+                    icon={<SettingsRoundedIcon />}
                     onClick={null}
-                    sx={itemStyle}
-                >
-                    <Typography color={'secondary'}>
-                        {TOP_BAR_ACCOUNT_SETTINGS_ACCOUNT}
-                    </Typography>
-                </MenuItem>
-                <MenuItem
+                />
+                <TopBarAccountMenuItem
+                    label={TOP_BAR_ACCOUNT_SETTINGS_LOGOUT}
+                    icon={<LogoutRoundedIcon />}
                     onClick={null}
-                    sx={itemStyle}
-                >
-                    <Typography color={'secondary'}>
-                        {TOP_BAR_ACCOUNT_SETTINGS_LOGOUT}
-                    </Typography>
-                </MenuItem>
+                />
             </Menu>
         </>
     );
@@ -97,16 +115,27 @@ const menuStyle = {
 const buttonStyle = {
     height: theme.spacing(5),
     p: 0,
+    [theme.breakpoints.down('sm')]: {
+        '&:before': {
+            content: '""',
+            position: 'absolute',
+            top: theme.spacing(-1.25),
+            left: theme.spacing(-0.75),
+            bottom: theme.spacing(-1.25),
+            right: 0
+        }
+    }
 };
 
 const avatarStyle = {
+    position: 'relative',
     borderRadius: theme.shape.borderRadius * 2,
     color: theme.palette.secondary.main,
     bgcolor: theme.palette.pastelPink.main,
     [theme.breakpoints.down('sm')]: {
         borderRadius: theme.shape.borderRadius * 2,
         height: theme.spacing(4.5),
-        width: theme.spacing(4.5)
+        width: theme.spacing(4.5),
     }
 };
 
@@ -115,10 +144,4 @@ const popperStyle = {
     [theme.breakpoints.down('xs')]: {
         pt: 2.25,
     }
-};
-
-const itemStyle = {
-    height: theme.spacing(5.5),
-    px: 2.5,
-    borderRadius: theme.shape.borderRadius * 3
 };

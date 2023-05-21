@@ -11,3 +11,9 @@ export const PRIORITY_COLORS = Object.freeze({
     3: alpha(theme.palette.error.main, 0.7),
     4: theme.palette.error.main,
 });
+
+export const ROUTE_DASHBOARD = 'dashboard';
+export const ROUTE_CALENDAR = 'calendar';
+export const ROUTE_TASKS = 'tasks';
+
+export const ROUTE_SETTINGS = 'settings';

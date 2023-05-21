@@ -1,8 +1,10 @@
 import { store } from './store';
-import { TTasksState } from './reducers/tasksReducer/types';
+import { ITasksState } from './reducers/tasksReducer/types';
+import { TDashboardState } from './reducers/dashboardReducer/types';
 
 export interface IAppState {
-    tasks?: TTasksState;
+    tasks?: ITasksState;
+    dashboard: TDashboardState;
 }
 
 export type RootState = ReturnType<typeof store.getState>

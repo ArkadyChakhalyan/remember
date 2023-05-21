@@ -25,6 +25,7 @@ export const TopBar = () => {
                 PopperProps={{ sx: { pt: 2.5 } }}
                 enterDelay={200}
                 enterNextDelay={200}
+                disableInteractive
             >
                 <IconButton
                     size={'large'}
@@ -104,7 +105,7 @@ const actionsStyle = {
     gap: 2,
     [theme.breakpoints.down('sm')]: {
         position: 'absolute',
-        left: theme.spacing(2.75),
+        left: theme.spacing(3),
         gap: 0.5
     },
 };

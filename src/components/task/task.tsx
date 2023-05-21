@@ -4,8 +4,8 @@ import { TTaskProps } from './types';
 import { useDispatch } from 'react-redux';
 import { addTaskAC, editTaskAC, toggleTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
 import { theme } from '../../style/theme';
-import CheckBoxRoundedIcon from '@mui/icons-material/CheckBoxRounded';
-import CheckBoxOutlineBlankRoundedIcon from '@mui/icons-material/CheckBoxOutlineBlankRounded';
+import RadioButtonUncheckedRoundedIcon from '@mui/icons-material/RadioButtonUncheckedRounded';
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { TaskActions } from './taskActions/taskActions';
 import { PRIORITY_COLORS } from '../../app/constants';
 import { NEW_TASK_PLACEHOLDER } from '../newTask/constants';
@@ -134,8 +134,8 @@ export const Task: FC<TTaskProps> = ({
             checked={!!taskModel.doneDate}
             onChange={onToggle}
             color={'success'}
-            checkedIcon={<CheckBoxRoundedIcon />}
-            icon={<CheckBoxOutlineBlankRoundedIcon />}
+            checkedIcon={<CheckCircleRoundedIcon />}
+            icon={<RadioButtonUncheckedRoundedIcon />}
             sx={checkboxStyle}
         />
         <TextField
@@ -168,7 +168,9 @@ const containerStyle = {
     alignItems: 'flex-start',
     flexDirection: 'row',
     pl: 0.25,
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: theme.shape.borderRadius * 1.75,
+    overflow: 'hidden',
+    background: theme.palette.background.default,
     '&:focus-within, &:hover': {
         '.MuiIconButton-root:last-of-type': {
             opacity: 1,
@@ -177,7 +179,7 @@ const containerStyle = {
     },
     '&:focus-visible': {
         outline: 'none'
-    }
+    },
 };
 
 const inputStyle = {

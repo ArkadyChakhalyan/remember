@@ -33,7 +33,7 @@ export const theme = createTheme({
             styleOverrides: {
                 root: {
                     padding: '6px 16px',
-                    borderRadius: '6px'
+                    borderRadius: '6px',
                 }
             }
         },
@@ -67,13 +67,12 @@ export const theme = createTheme({
     palette: {
         primary: { main: '#2c2c2c' },
         secondary: { main: '#F5F5F5'},
-        success: { main: '#2ECC71' },
+        success: { main: '#a4c771', light: '#cdfe7b' },
         error: { main: '#E74C3C'},
         pastelBlue: { main: '#AED6F1'},
         pastelGreen: { main: '#A2D9CE'},
         pastelPink: { main: '#F5B7B1'},
         pastelYellow: { main: '#F9E79F'},
-        accentGreen: { main: '#b1fc65' },
         text: {
             primary: '#333333',
             secondary: '#F5F5F5',
