@@ -80,6 +80,12 @@ export const NewTask: FC<TNewTaskProps> = ({
         setPriority(priority);
     };
 
+    const onButtonKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            e.stopPropagation();
+        }
+    };
+
     useEffect(() => {
         setTimeout(() => {
             const input = inputRef?.current.querySelector('textarea');
@@ -121,6 +127,7 @@ export const NewTask: FC<TNewTaskProps> = ({
             variant={'contained'}
             disabled={!text}
             sx={buttonStyle}
+            onKeyDown={onButtonKeyDown}
             onClick={onAdd}
         >
             Add new task

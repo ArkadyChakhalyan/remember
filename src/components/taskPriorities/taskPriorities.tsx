@@ -30,5 +30,4 @@ export const TaskPriorities: FC<TTaskPrioritiesProps> = ({
 const priorityStyle = {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    minWidth: theme.spacing(33.75),
 };

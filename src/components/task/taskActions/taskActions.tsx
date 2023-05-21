@@ -90,6 +90,60 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         }
     };
 
+    const editHeader = (dateEdit || priorityEdit) && <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
+        <IconButton
+            sx={{ pl: 0, ml: -0.75 }}
+            color={'secondary'}
+            onClick={() => setPriorityEdit(false)}
+        >
+            <ChevronLeftRoundedIcon />
+        </IconButton>
+        <Typography color={'secondary'} variant={'body2'}>Priority</Typography>
+    </Stack>;
+
+    const editPriority = priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />;
+
+    const editDate = dateEdit && <div />;
+
+    const dateButton = !priorityEdit && !dateEdit &&
+        <TaskAction
+            label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
+            icon={<EventNoteRoundedIcon />}
+            onClick={() => setDateEdit(true)}
+        />;
+
+    const priorityButton = !priorityEdit && !dateEdit &&
+        <TaskAction
+            label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
+            onClick={() => setPriorityEdit(true)}
+            icon={<ErrorOutlineRoundedIcon />}
+        />;
+
+    const subTaskButton = !priorityEdit && !dateEdit && id &&
+        <TaskAction
+            label={TASK_ACTIONS_SUB_TASK}
+            icon={<SubdirectoryArrowRightRoundedIcon />}
+            onClick={() => onMenuItemClick(null)}
+            onEnter={onEnter}
+        />;
+
+    const duplicateButton = !priorityEdit && !dateEdit && id &&
+        <TaskAction
+            label={TASK_ACTIONS_DUPLICATE}
+            icon={<ContentCopyRoundedIcon />}
+            onClick={() => onMenuItemClick(onDuplicate)}
+            onEnter={onEnter}
+        />;
+
+    const deleteButton = !priorityEdit && !dateEdit &&
+        <TaskAction
+            color={theme.palette.error.main}
+            label={TASK_ACTIONS_DELETE}
+            icon={<DeleteOutlineRoundedIcon />}
+            onClick={() => onMenuItemClick(onDelete)}
+            onEnter={onEnter}
+        />;
+
     const menu = window.innerWidth >= 600 ?
         <Menu
             anchorEl={anchor}
@@ -107,60 +161,16 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             disableAutoFocusItem
             PaperProps={{ sx: menuStyle }}
         >
-            {(dateEdit || priorityEdit) &&
-                <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
-                    <IconButton
-                        color={'secondary'}
-                        onClick={() => setPriorityEdit(false)}
-                    >
-                        <ChevronLeftRoundedIcon />
-                    </IconButton>
-                    <Typography color={'secondary'}>Priority</Typography>
-                </Stack>
-            }
-            {dateEdit && <div></div>}
-            {priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />}
-            {!priorityEdit && !dateEdit &&
-                <TaskAction
-                    label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
-                    icon={<EventNoteRoundedIcon />}
-                    onClick={() => setDateEdit(true)}
-                />
-            }
-            {!priorityEdit && !dateEdit &&
-                <TaskAction
-                    label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
-                    onClick={() => setPriorityEdit(true)}
-                    icon={<ErrorOutlineRoundedIcon />}
-                />
-            }
+            {editHeader}
+            {editDate}
+            {editPriority}
+            {dateButton}
+            {priorityButton}
             {!priorityEdit && !dateEdit && id && <Divider />}
-            {!priorityEdit && !dateEdit && id &&
-                <TaskAction
-                    label={TASK_ACTIONS_SUB_TASK}
-                    icon={<SubdirectoryArrowRightRoundedIcon />}
-                    onClick={() => onMenuItemClick(null)}
-                    onEnter={onEnter}
-                />
-            }
-            {!priorityEdit && !dateEdit && id &&
-                <TaskAction
-                    label={TASK_ACTIONS_DUPLICATE}
-                    icon={<ContentCopyRoundedIcon />}
-                    onClick={() => onMenuItemClick(onDuplicate)}
-                    onEnter={onEnter}
-                />
-            }
+            {subTaskButton}
+            {duplicateButton}
             {!priorityEdit &&  !dateEdit && <Divider />}
-            {!priorityEdit && !dateEdit &&
-                <TaskAction
-                    color={theme.palette.error.main}
-                    label={TASK_ACTIONS_DELETE}
-                    icon={<DeleteOutlineRoundedIcon />}
-                    onClick={() => onMenuItemClick(onDelete)}
-                    onEnter={onEnter}
-                />
-            }
+            {deleteButton}
         </Menu>
         : <SwipeableDrawer
             anchor={'bottom'}
@@ -172,60 +182,16 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             disableDiscovery={iOS}
             disablePortal
         >
-            {(dateEdit || priorityEdit) &&
-                <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
-                    <IconButton
-                        color={'secondary'}
-                        onClick={() => setPriorityEdit(false)}
-                    >
-                        <ChevronLeftRoundedIcon />
-                    </IconButton>
-                    <Typography color={'secondary'}>Priority</Typography>
-                </Stack>
-            }
-            {dateEdit && <div></div>}
-            {priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />}
-            {!priorityEdit && !dateEdit &&
-                <TaskAction
-                    label={date ? TASK_ACTIONS_DATE_CHANGE : TASK_ACTIONS_DATE_ADD}
-                    icon={<EventNoteRoundedIcon />}
-                    onClick={() => setDateEdit(true)}
-                />
-            }
-            {!priorityEdit && !dateEdit &&
-                <TaskAction
-                    label={priority ? TASK_ACTIONS_PRIORITY_CHANGE : TASK_ACTIONS_PRIORITY_ADD}
-                    icon={<ErrorOutlineRoundedIcon />}
-                    onClick={() => setPriorityEdit(true)}
-                />
-            }
+            {editHeader}
+            {editDate}
+            {editPriority}
+            {dateButton}
+            {priorityButton}
             {!priorityEdit && !dateEdit && id && <Divider />}
-            {!priorityEdit && !dateEdit && id &&
-                <TaskAction
-                    label={TASK_ACTIONS_SUB_TASK}
-                    icon={<SubdirectoryArrowRightRoundedIcon />}
-                    onClick={() => onMenuItemClick(null)}
-                    onEnter={onEnter}
-                />
-            }
-            {!priorityEdit && !dateEdit && id &&
-                <TaskAction
-                    label={TASK_ACTIONS_DUPLICATE}
-                    onClick={() => onMenuItemClick(onDuplicate)}
-                    icon={<ContentCopyRoundedIcon />}
-                    onEnter={onEnter}
-                />
-            }
+            {subTaskButton}
+            {duplicateButton}
             {!priorityEdit &&  !dateEdit && <Divider />}
-            {!priorityEdit && !dateEdit &&
-                <TaskAction
-                    color={theme.palette.error.main}
-                    label={TASK_ACTIONS_DELETE}
-                    icon={<DeleteOutlineRoundedIcon />}
-                    onClick={() => onMenuItemClick(onDelete)}
-                    onEnter={onEnter}
-                />
-            }
+            {deleteButton}
         </SwipeableDrawer>;
 
     return <>
@@ -274,10 +240,18 @@ const drawerStyle = {
 };
 
 const priorityStyle = {
-    p: 1.5,
+    minWidth: theme.spacing(27),
     maxWidth: theme.spacing(40),
+    p: 1,
+    [theme.breakpoints.up('sm')]: {
+        '.MuiButtonBase-root': {
+            width: theme.spacing(4),
+            height: theme.spacing(4)
+        },
+    },
     [theme.breakpoints.down('sm')]: {
-        p: 4
+        p: 2,
+        px: 4
     },
     [theme.breakpoints.down('xs')]: {
         px: 2,
@@ -287,12 +261,11 @@ const priorityStyle = {
 
 const headerStyle = {
     p: 0,
-    pt: 0.5,
+    px: 1,
     [theme.breakpoints.down('sm')]: {
-        p: 2,
-        pb: 0,
+        px: 4,
     },
     [theme.breakpoints.down('xs')]: {
-        px: 1
+        px: 2
     }
 };
