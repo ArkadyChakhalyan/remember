@@ -5,7 +5,7 @@ import { TASK_LIST_ADD, TASK_LIST_EMPTY } from './constants';
 import { theme } from '../../style/theme';
 import { DEFAULT_TASK_PRIORITY } from '../../app/constants';
 import { getTaskDateByTab } from '../../helpers/getTaskDateByTab';
-import { getTasksSortedByTab } from './helpers/getTasksSortedByTab';
+import { getSortedTasks } from '../../store/selectors/getSortedTasks';
 import { useSelector } from 'react-redux';
 import { getDashboardTaskListTab } from '../../store/reducers/dashboardReducer/selectors/getDashboardTaskListTab';
 import { getTasks } from '../../store/reducers/tasksReducer/selectors/getTasks';
@@ -16,10 +16,10 @@ export const TaskList = () => {
     const tab = useSelector(getDashboardTaskListTab);
     const tasks = useSelector(getTasks);
 
-    const tasksToShow = getTasksSortedByTab(tasks, tab);
+    const sortedTasks = getSortedTasks(tab, tasks);
 
     return <Stack spacing={0.25} sx={containerStyle}>
-        {!!tasksToShow.length && tasksToShow.map(task => (<Task key={task.id} task={task} />))}
+        {!!sortedTasks.length && sortedTasks.map(task => (<Task key={task.id} task={task} />))}
         {show &&
             <Task
                 task={{
@@ -42,7 +42,7 @@ export const TaskList = () => {
         >
             {TASK_LIST_ADD}
         </Button>
-        {!tasksToShow.length && <Typography sx={textStyle}>{TASK_LIST_EMPTY}</Typography>}
+        {!sortedTasks.length && <Typography sx={textStyle}>{TASK_LIST_EMPTY}</Typography>}
     </Stack>;
 };
 

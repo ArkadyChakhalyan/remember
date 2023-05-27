@@ -21,11 +21,15 @@ const searchStyle = {
     height: theme.spacing(6),
     bgcolor: alpha(theme.palette.primary.light, 0.2),
     borderRadius: theme.shape.borderRadius * 2.5,
+    transition: theme.transitions.create('background'),
     '&:focus-within, &:hover': {
         '& > .MuiSvgIcon-root': {
             color: theme.palette.secondary.main,
             transition: theme.transitions.create('color')
         },
+    },
+    '&:focus-within': {
+        bgcolor: alpha(theme.palette.primary.light, 0.6),
     },
     [theme.breakpoints.down('md')]: {
         width: 'unset',

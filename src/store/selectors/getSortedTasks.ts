@@ -1,9 +1,9 @@
-import { ETaskDate, ETaskListTab, ITask } from '../../../types/types';
-import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
+import { ETaskDate, ETaskListTab, ITask } from '../../types/types';
+import { getTaskDateByLabel } from '../../helpers/getTaskDateByLabel';
 
-export const getTasksSortedByTab = (
-    tasks: ITask[],
-    tab: ETaskListTab
+export const getSortedTasks = (
+    tab: ETaskListTab,
+    tasks: ITask[]
 ): ITask[] => {
     if (tab === ETaskListTab.ALL) {
         return tasks;

@@ -1,4 +1,4 @@
-import { alpha, IconButton, Stack } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
 import React, { FC } from 'react';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { theme } from '../../style/theme';
@@ -28,19 +28,16 @@ const buttonStyle = {
     width: theme.spacing(8),
     background: theme.palette.success.main,
     transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
+    zIndex: 10,
     '.MuiSvgIcon-root': {
         color: theme.palette.secondary.main,
         transition: 'inherit'
     },
     '&:hover,&:focus': {
-        boxShadow: `0 ${theme.spacing(0.25)} ${theme.spacing(0.75)} ${alpha(theme.palette.common.black, 0.55)}`,
         '.MuiSvgIcon-root': {
             color: theme.palette.secondary.main
         },
     },
-    [theme.breakpoints.down('sm')]: {
-        boxShadow: `0 ${theme.spacing(0.25)} ${theme.spacing(0.75)} ${alpha(theme.palette.common.black, 0.4)}`,
-    }
 };
 
 const toggleStyle = {
@@ -50,9 +47,4 @@ const toggleStyle = {
             color: theme.palette.secondary.main
         },
     },
-    [theme.breakpoints.down('sm')]: {
-        '.MuiIconButton-root': {
-            boxShadow: `0 ${theme.spacing(0.25)} ${theme.spacing(0.75)} ${alpha(theme.palette.common.black, 0.55)}`,
-        }
-    }
 };

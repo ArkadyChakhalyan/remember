@@ -12,12 +12,16 @@ import {
 } from '../../../store/reducers/dashboardReducer/selectors/getDashboardUnseenTaskDate';
 import { getTaskDateByTab } from '../../../helpers/getTaskDateByTab';
 import TuneRoundedIcon from '@mui/icons-material/TuneRounded';
+import { ProgressBar } from '../../../components/progressBar/progressBar';
+import { getTasks } from '../../../store/reducers/tasksReducer/selectors/getTasks';
+import { getSortedTasks } from '../../../store/selectors/getSortedTasks';
 
 export const DashboardTasks = () => {
     const dispatch = useDispatch();
 
     const tab = useSelector(getDashboardTaskListTab);
     const unseenTaskDate = useSelector(getDashboardUnseenTaskDate);
+    const tasks = useSelector(getTasks);
 
     useEffect(() => {
         if (!unseenTaskDate) return;
@@ -25,6 +29,10 @@ export const DashboardTasks = () => {
             dispatch(setUnseenTaskDateAC(null));
         }
     }, [tab]);
+
+    const sortedTasks = getSortedTasks(tab, tasks);
+    const tasksCount = sortedTasks.length ? sortedTasks.length > 99 ? '99+' : String(sortedTasks.length) : null;
+    const doneTasksCount = sortedTasks.filter(task => task.doneDate).length / sortedTasks.length * 100;
 
     return <Stack sx={containerStyle} spacing={2}>
         <Stack sx={headerStyle}>
@@ -36,20 +44,23 @@ export const DashboardTasks = () => {
                 scrollButtons={false}
             >
                 {
-                    DASHBOARDS_TASK_LIST_TAB.map(tab => (
+                    DASHBOARDS_TASK_LIST_TAB.map(item => (
                         <Tab
-                            key={tab}
+                            key={item}
                             sx={{
                                 ...tabStyle,
                                 ...(
                                     unseenTaskDate && (
                                         tab === ETaskListTab.ALL ||
-                                        unseenTaskDate <= getTaskDateByTab(tab)
+                                        unseenTaskDate <= getTaskDateByTab(item)
                                     ) ? unseenStyle : null
-                                )
+                                ),
+                                ...(item === tab && tasksCount ? withCounterStyle : null)
                             }}
-                            label={tab}
-                            value={tab}
+                            label={item}
+                            icon={item === tab && tasksCount && <ProgressBar label={tasksCount} value={doneTasksCount} />}
+                            iconPosition={'end'}
+                            value={item}
                         />
                     ))
                 }
@@ -142,6 +153,10 @@ const tabsStyle = {
     }
 };
 
+const withCounterStyle = {
+    pr: 1
+};
+
 const unseenStyle = {
     '&:before': {
         content: '""',
@@ -156,7 +171,12 @@ const unseenStyle = {
 }
 
 const tabStyle = {
+    display: 'flex',
+    gap: 1.25,
+    alignItems: 'center',
     minWidth: 'fit-content',
+    minHeight: 'unset',
+    height: theme.spacing(5.25),
     '&.Mui-selected': {
         color: theme.palette.secondary.main
     },
