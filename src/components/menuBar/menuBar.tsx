@@ -1,4 +1,4 @@
-import { alpha, Box, ClickAwayListener, Stack } from '@mui/material';
+import { alpha, ClickAwayListener, Stack } from '@mui/material';
 import { MENU_BAR_LOGOUT_LABEL, MENU_BAR_OPTIONS } from './constants';
 import { useLocation } from 'react-router-dom';
 import { MenuBarItem } from './menuBarItem/menuBarItem';
@@ -19,7 +19,9 @@ export const MenuBar = () => {
         const onResize = () => {
             setOpen(window.innerWidth >= 600); // breakpoint SM
         };
+
         onResize();
+
         window.addEventListener('resize', onResize);
         return () => window.removeEventListener('resize', onResize);
     }, []);
@@ -57,7 +59,7 @@ export const MenuBar = () => {
 };
 
 const containerStyle = {
-    position: 'fixed',
+    position: 'absolute',
     top: 0,
     left: 0,
     width: theme.spacing(28),
@@ -123,6 +125,11 @@ const menuStyle = {
     alignItems: 'center',
     transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
     zIndex: 1,
+    [theme.breakpoints.down('lg')]: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        gap: theme.spacing(2.5)
+    },
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -149,11 +156,11 @@ const contentStyle = {
 const cardStyle = {
     [theme.breakpoints.down('sm')]: {
         ...containerStyle[theme.breakpoints.down('sm')] as object,
-        height: theme.spacing(48),
+        height: '45%',
     },
     [theme.breakpoints.down('xs')]: {
         ...containerStyle[theme.breakpoints.down('xs')] as object,
-        height: theme.spacing(48),
+        height: '45%',
     }
 };
 
@@ -170,8 +177,10 @@ const addStyle = {
     opacity: 0,
     transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s',
     pointerEvents: 'none',
-    zIndex: 1
-
+    zIndex: 1,
+    [theme.breakpoints.up('sm')]: {
+        display: 'none'
+    }
 };
 
 const showStyle = {

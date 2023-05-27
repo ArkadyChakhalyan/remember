@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { MenuItem, Typography } from '@mui/material';
-import { theme } from '../../../style/theme';
+import { theme } from '../../../../style/theme';
 import { TTopBarAccountMenuItem } from './types';
 
 export const TopBarAccountMenuItem: FC<TTopBarAccountMenuItem> = ({
@@ -35,6 +35,6 @@ const containerStyle = {
 
 const textStyle = {
     [theme.breakpoints.down('sm')]: {
-        fontSize: '0.9rem'
+        fontSize: '0.95rem'
     },
 };

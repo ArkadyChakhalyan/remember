@@ -90,16 +90,23 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         }
     };
 
-    const editHeader = (dateEdit || priorityEdit) && <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
-        <IconButton
-            sx={{ pl: 0, ml: -0.75 }}
-            color={'secondary'}
-            onClick={() => setPriorityEdit(false)}
-        >
-            <ChevronLeftRoundedIcon />
-        </IconButton>
-        <Typography color={'secondary'} variant={'body2'}>Priority</Typography>
-    </Stack>;
+    const editHeader = (dateEdit || priorityEdit) &&
+        <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
+            <IconButton
+                sx={{ pl: 0, ml: -0.75 }}
+                color={'secondary'}
+                onClick={() => setPriorityEdit(false)}
+            >
+                <ChevronLeftRoundedIcon />
+            </IconButton>
+            <Typography
+                color={'secondary'}
+                variant={'body2'}
+                sx={headerTextStyle}
+            >
+                Priority
+            </Typography>
+        </Stack>;
 
     const editPriority = priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />;
 
@@ -268,4 +275,10 @@ const headerStyle = {
     [theme.breakpoints.down('xs')]: {
         px: 2
     }
+};
+
+const headerTextStyle = {
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '0.95rem'
+    },
 };

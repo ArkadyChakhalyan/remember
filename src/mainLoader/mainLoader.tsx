@@ -9,6 +9,7 @@ export const MainLoader = () => {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
+            document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#2c2c2c');
         }, 1000);
     }, []);
 

@@ -77,13 +77,14 @@ const containerStyle = {
     '.MuiTabs-indicator': {
         background: theme.palette.secondary.main
     },
-    ':before': {
+    ':after': {
         content: '""',
-        position: 'absolute',
+        position: 'sticky',
         bottom: 0,
         left: 0,
         right: 0,
-        boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2.5)} ${alpha(theme.palette.background.default, 0.8)}`,
+        transform: `translateY(${theme.spacing(3)})`,
+        boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2)} ${theme.palette.background.default}`,
 
     },
     [theme.breakpoints.down('md')]: {
@@ -98,17 +99,33 @@ const containerStyle = {
 };
 
 const headerStyle = {
-    position: 'relative',
+    position: 'sticky',
+    top: 0,
+    minHeight: theme.spacing(7.75),
+    pr: 3,
     overflow: 'hidden',
-    borderBottom: 1,
-    borderColor: 'divider',
+    zIndex: 1,
+    boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2)} ${theme.palette.background.default}`,
+    '&:before': {
+        content: '""',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: '1px',
+        bgcolor: 'divider',
+        zIndex: 2
+    },
+    [theme.breakpoints.down('sm')]: {
+        minHeight: theme.spacing(6.75),
+    },
+    [theme.breakpoints.down('xs')]: {
+        minHeight: theme.spacing(6.25),
+    }
 };
 
 const tabsStyle = {
-    position: 'sticky',
-    top: 0,
     pt: 1.75,
-    pr: 3,
     overflow: 'visible',
     background: theme.palette.background.default,
     boxShadow: `0 0 ${theme.spacing(1.75)} ${theme.spacing(2.5)} ${alpha(theme.palette.background.default, 0.8)}`,

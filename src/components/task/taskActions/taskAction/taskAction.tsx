@@ -38,6 +38,6 @@ const containerStyle = {
 
 const textStyle = {
     [theme.breakpoints.down('sm')]: {
-        fontSize: '0.9rem'
+        fontSize: '0.95rem'
     },
 };

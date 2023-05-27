@@ -6,7 +6,7 @@ import {
     TOP_BAR_ACCOUNT_SETTINGS_LOGOUT, TOP_BAR_ACCOUNT_SETTINGS_NOTIFICATIONS,
     TOP_BAR_ACCOUNT_TOOLTIP
 } from './constants';
-import { TopBarAccountMenuItem } from '../topBarAccountMenuItem/topBarAccountMenuItem';
+import { TopBarAccountMenuItem } from './topBarAccountMenuItem/topBarAccountMenuItem';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
