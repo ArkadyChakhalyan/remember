@@ -20,6 +20,8 @@ export const NewTask: FC<TNewTaskProps> = ({
     preventClose,
     onClose
 }) => {
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
     const dispatch = useDispatch();
     const location = useLocation();
 
@@ -30,6 +32,7 @@ export const NewTask: FC<TNewTaskProps> = ({
     const [date, setDate] = useState(getTaskDateByLabel(ETaskDate.THIS_MONTH));
 
     const inputRef = useRef(null);
+    const buttonRef = useRef(null);
 
     const onAdd = () => {
         if (!text || !text.trim()) return;
@@ -112,7 +115,7 @@ export const NewTask: FC<TNewTaskProps> = ({
         <TextField
             ref={inputRef}
             multiline
-            autoFocus
+            autoFocus={!iOS}
             value={text}
             onChange={e => setText(e.currentTarget.value)}
             placeholder={NEW_TASK_PLACEHOLDER}
@@ -123,6 +126,7 @@ export const NewTask: FC<TNewTaskProps> = ({
         />
         <TaskPriorities priority={priority} onPriorityChange={onPriorityChange} sx={priorityStyle} />
         <Button
+            ref={buttonRef}
             size={'large'}
             variant={'contained'}
             disabled={!text}

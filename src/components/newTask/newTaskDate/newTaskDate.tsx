@@ -1,16 +1,14 @@
 import { MenuItem, Select } from '@mui/material';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useRef } from 'react';
 import { TNewTaskDateProps } from './types';
-import { NEW_TASK_DATES } from './constants';
 import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
 import { theme } from '../../../style/theme';
+import { TASK_DATES } from '../../../app/constants';
 
 export const NewTaskDate: FC<TNewTaskDateProps> = ({
     date,
     onChange
 }) => {
-    const [options, setOptions] = useState([]);
-
     const ref = useRef(null);
 
     const onOpen = () => {
@@ -18,17 +16,6 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
             ref?.current?.querySelector('ul')?.focus();
         }, 100);
     };
-
-    useEffect(() => {
-        setOptions(NEW_TASK_DATES.map(item => {
-            return {
-                ...item,
-                value: getTaskDateByLabel(item.label)
-            }
-        }));
-    }, []);
-
-    if (!options.length) return;
 
     return <Select
         variant={'standard'}
@@ -52,13 +39,13 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
             ref
         }}
     >
-        {options.map(({ label, value }) => (
+        {TASK_DATES.map((date) => (
             <MenuItem
                 sx={itemStyle}
-                key={label}
-                value={value}
+                key={date}
+                value={getTaskDateByLabel(date)}
             >
-                {label}
+                {date}
             </MenuItem>
         ))}
     </Select>;

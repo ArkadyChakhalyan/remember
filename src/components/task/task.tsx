@@ -169,7 +169,6 @@ const containerStyle = {
     flexDirection: 'row',
     pl: 0.25,
     borderRadius: theme.shape.borderRadius * 1.75,
-    overflow: 'hidden',
     background: theme.palette.background.default,
     '&:focus-within, &:hover': {
         '.MuiIconButton-root:last-of-type': {

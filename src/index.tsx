@@ -15,7 +15,7 @@ root.render(
         <Provider store={store}>
             <Browser>
                 <ThemeProvider theme={theme}>
-                    <GlobalStyles styles={{ body: { margin: 0, background: theme.palette.secondary.main } }} />
+                    <GlobalStyles styles={{ body: { position: 'relative', margin: 0, background: theme.palette.secondary.main } }} />
                     <App />
                 </ThemeProvider>
             </Browser>

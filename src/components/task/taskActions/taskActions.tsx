@@ -6,10 +6,12 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import { theme } from '../../../style/theme';
 import {
+    TASK_ACTIONS_DATE,
     TASK_ACTIONS_DATE_ADD,
     TASK_ACTIONS_DATE_CHANGE,
     TASK_ACTIONS_DELETE,
     TASK_ACTIONS_DUPLICATE,
+    TASK_ACTIONS_PRIORITY,
     TASK_ACTIONS_PRIORITY_ADD,
     TASK_ACTIONS_PRIORITY_CHANGE,
     TASK_ACTIONS_SUB_TASK
@@ -24,6 +26,8 @@ import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 import SubdirectoryArrowRightRoundedIcon from '@mui/icons-material/SubdirectoryArrowRightRounded';
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
+import { TASK_DATES } from '../../../app/constants';
+import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
 
 export const TaskActions: FC<TTaskActionsProps> = ({
     task,
@@ -68,6 +72,11 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         onClose();
     };
 
+    const onDateSelect = (date: number) => {
+        onDateChange(date);
+        onClose();
+    };
+
     const onDelete = () => {
         if (onDeleteOwn) {
             onDeleteOwn();
@@ -90,12 +99,17 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         }
     };
 
+    const onBack = () => {
+        setPriorityEdit(false);
+        setDateEdit(false);
+    }
+
     const editHeader = (dateEdit || priorityEdit) &&
-        <Stack direction={'row'} alignItems={'center'} sx={headerStyle}>
+        <Stack sx={{ ...headerStyle, ...(priorityEdit ? headerPriorityStyle : null) }}>
             <IconButton
-                sx={{ pl: 0, ml: -0.75 }}
+                sx={headerBackStyle}
                 color={'secondary'}
-                onClick={() => setPriorityEdit(false)}
+                onClick={onBack}
             >
                 <ChevronLeftRoundedIcon />
             </IconButton>
@@ -104,13 +118,24 @@ export const TaskActions: FC<TTaskActionsProps> = ({
                 variant={'body2'}
                 sx={headerTextStyle}
             >
-                Priority
+                {dateEdit ? TASK_ACTIONS_DATE : TASK_ACTIONS_PRIORITY}
             </Typography>
         </Stack>;
 
     const editPriority = priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />;
 
-    const editDate = dateEdit && <div />;
+    const editDate = dateEdit && <Stack sx={{ minWidth: theme.spacing(20) }}>
+        {
+            TASK_DATES.map(item => (
+                <TaskAction
+                    key={item}
+                    label={item}
+                    onClick={() => onDateSelect(getTaskDateByLabel(item))}
+                    selected={(date || 0) === getTaskDateByLabel(item)}
+                />
+            ))
+        }
+    </Stack>;
 
     const dateButton = !priorityEdit && !dateEdit &&
         <TaskAction
@@ -214,7 +239,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
 };
 
 const buttonStyle = {
-    height: 1,
     color: alpha(theme.palette.secondary.main, 0.6),
     transition: theme.transitions.create(['color', 'opacity']),
     transform: 'rotate(90deg)',
@@ -267,14 +291,28 @@ const priorityStyle = {
 };
 
 const headerStyle = {
+    flexDirection: 'row',
+    alignItems: 'center',
     p: 0,
     px: 1,
+};
+
+const headerPriorityStyle = {
     [theme.breakpoints.down('sm')]: {
         px: 4,
     },
     [theme.breakpoints.down('xs')]: {
         px: 2
     }
+}
+
+const headerBackStyle = {
+    p: 0.5,
+    pl: 0,
+    ml: -0.75,
+    [theme.breakpoints.down('sm')]: {
+        py: 1,
+    },
 };
 
 const headerTextStyle = {

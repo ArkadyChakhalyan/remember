@@ -51,14 +51,14 @@ export const DashboardTasks = () => {
                                 ...tabStyle,
                                 ...(
                                     unseenTaskDate && (
-                                        tab === ETaskListTab.ALL ||
+                                        item === ETaskListTab.ALL ||
                                         unseenTaskDate <= getTaskDateByTab(item)
                                     ) ? unseenStyle : null
                                 ),
                                 ...(item === tab && tasksCount ? withCounterStyle : null)
                             }}
                             label={item}
-                            icon={item === tab && tasksCount && <ProgressBar label={tasksCount} value={doneTasksCount} />}
+                            icon={item === tab && tasksCount ? <ProgressBar label={tasksCount} value={doneTasksCount} /> : null}
                             iconPosition={'end'}
                             value={item}
                         />

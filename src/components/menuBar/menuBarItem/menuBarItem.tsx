@@ -1,5 +1,5 @@
 import { alpha, Button, Stack, Tooltip } from '@mui/material';
-import React, { FC } from 'react';
+import React, { CSSProperties, FC } from 'react';
 import { TMenuBarItemProps } from './types';
 import { Link } from 'react-router-dom';
 import { theme } from '../../../style/theme';
@@ -30,7 +30,7 @@ export const MenuBarItem: FC<TMenuBarItemProps> = ({
     >
         {
             link ?
-                <Link to={link} tabIndex={-1} style={linkStyle}>
+                <Link to={link} tabIndex={-1} style={linkStyle as CSSProperties}>
                     {button}
                 </Link>
                 : button
@@ -48,6 +48,7 @@ const buttonStyle = {
     textTransform: 'none',
     fontWeight: 500,
     borderRadius: theme.shape.borderRadius * 3,
+    transition: 'none',
     '.MuiButton-startIcon': {
         mr: 1.5,
         ml: 0
@@ -86,6 +87,7 @@ const linkStyle = {
     justifyContent: 'center',
     width: '100%',
     textDecoration: 'none',
+    pointerEvents: 'all'
 };
 
 const popperStyle = {

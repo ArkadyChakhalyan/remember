@@ -5,7 +5,7 @@ import { MenuBarItem } from './menuBarItem/menuBarItem';
 import { theme } from '../../style/theme';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { MenuBarAdd } from './menuBarAdd/menuBarAdd';
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { NewTask } from '../newTask/newTask';
 import { Logo } from '../logo/logo';
 import { LogoIcon } from '../logo/logoIcon';
@@ -14,6 +14,7 @@ export const MenuBar = () => {
     const location = useLocation();
 
     const [open, setOpen] = useState(null);
+    const [test, setTest] = useState(0);
 
     useEffect(() => {
         const onResize = () => {
@@ -31,7 +32,7 @@ export const MenuBar = () => {
             <Logo sx={logoStyle} color={'primary'}  />
             <LogoIcon sx={logoIconStyle} color={'primary'} />
             <Stack sx={contentStyle}>
-                <Stack sx={{ ...menuStyle, ...(open ? hiddenStyle : null) }}>
+                <Stack sx={{ ...menuStyle as CSSProperties, ...(open ? hiddenStyle : null) }}>
                     {
                         MENU_BAR_OPTIONS.map(item => (
                             <MenuBarItem
@@ -125,6 +126,7 @@ const menuStyle = {
     alignItems: 'center',
     transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
     zIndex: 1,
+    pointerEvents: 'none',
     [theme.breakpoints.down('lg')]: {
         flexGrow: 1,
         justifyContent: 'center',
@@ -136,7 +138,7 @@ const menuStyle = {
         justifyContent: 'space-between',
         gap: 0,
         'a:nth-of-type(3)': {
-            marginLeft: '25%'
+            marginLeft: '21%'
         }
     },
 };
