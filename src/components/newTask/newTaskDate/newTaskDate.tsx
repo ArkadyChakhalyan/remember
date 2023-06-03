@@ -1,9 +1,9 @@
 import { MenuItem, Select } from '@mui/material';
 import React, { FC, useRef } from 'react';
 import { TNewTaskDateProps } from './types';
-import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
 import { theme } from '../../../style/theme';
 import { TASK_DATES } from '../../../app/constants';
+import { ETaskDate } from '../../../types/types';
 
 export const NewTaskDate: FC<TNewTaskDateProps> = ({
     date,
@@ -22,7 +22,7 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
         sx={selectStyle}
         id={'new-task-date'}
         value={date}
-        onChange={e => onChange(Number(e.target.value))}
+        onChange={e => onChange(e.target.value as ETaskDate)}
         onOpen={onOpen}
         MenuProps={{
             sx: menuStyle,
@@ -43,7 +43,7 @@ export const NewTaskDate: FC<TNewTaskDateProps> = ({
             <MenuItem
                 sx={itemStyle}
                 key={date}
-                value={getTaskDateByLabel(date)}
+                value={date}
             >
                 {date}
             </MenuItem>

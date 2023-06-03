@@ -13,12 +13,14 @@ export const ProgressBar: FC<TProgressBarProps> = ({
                 variant={'determinate'}
                 value={100}
                 sx={progressBgStyle}
+                thickness={6}
                 size={theme.spacing(3.5)}
             />
             <CircularProgress
                 variant={'determinate'}
                 value={value}
                 sx={progressStyle}
+                thickness={6}
                 size={theme.spacing(3.5)}
             />
             <Typography sx={labelStyle} color={'secondary'}>
@@ -45,7 +47,7 @@ const labelStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '0.6rem'
+    fontSize: '0.55rem'
 };
 
 const progressStyle = {

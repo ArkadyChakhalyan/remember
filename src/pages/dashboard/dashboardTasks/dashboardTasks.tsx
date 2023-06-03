@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskList } from '../../../components/taskList/taskList';
 import { alpha, IconButton, Stack, Tab, Tabs } from '@mui/material';
 import { theme } from '../../../style/theme';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { DASHBOARDS_TASK_LIST_TAB } from './contants';
 import { getDashboardTaskListTab } from '../../../store/reducers/dashboardReducer/selectors/getDashboardTaskListTab';
 import { changeTaskListTabAC, setUnseenTaskDateAC } from '../../../store/reducers/dashboardReducer/dashboardReducer';
@@ -23,6 +23,18 @@ export const DashboardTasks = () => {
     const unseenTaskDate = useSelector(getDashboardUnseenTaskDate);
     const tasks = useSelector(getTasks);
 
+    const tabsRef = useRef(null);
+
+    const onChange = (
+        e: React.SyntheticEvent,
+        tab: ETaskListTab
+    ) => {
+        if (tab === DASHBOARDS_TASK_LIST_TAB.at(-1)) {
+            tabsRef.current.querySelector('.MuiTabs-scroller').scrollLeft = 10000;
+        }
+        dispatch(changeTaskListTabAC(tab));
+    };
+
     useEffect(() => {
         if (!unseenTaskDate) return;
         if (tab === ETaskListTab.ALL || unseenTaskDate <= getTaskDateByTab(tab)) {
@@ -37,8 +49,9 @@ export const DashboardTasks = () => {
     return <Stack sx={containerStyle} spacing={2}>
         <Stack sx={headerStyle}>
             <Tabs
+                ref={tabsRef}
                 value={tab}
-                onChange={(e, tab) => dispatch(changeTaskListTabAC(tab))}
+                onChange={onChange}
                 sx={tabsStyle}
                 variant={'scrollable'}
                 scrollButtons={false}
@@ -55,7 +68,8 @@ export const DashboardTasks = () => {
                                         unseenTaskDate <= getTaskDateByTab(item)
                                     ) ? unseenStyle : null
                                 ),
-                                ...(item === tab && tasksCount ? withCounterStyle : null)
+                                ...(item === tab && tasksCount ? withCounterStyle : null),
+                                ...(item === ETaskListTab.OVERDUE ? overdueStyle : null)
                             }}
                             label={item}
                             icon={item === tab && tasksCount ? <ProgressBar label={tasksCount} value={doneTasksCount} /> : null}
@@ -179,6 +193,13 @@ const tabStyle = {
     height: theme.spacing(5.25),
     '&.Mui-selected': {
         color: theme.palette.secondary.main
+    },
+};
+
+const overdueStyle = {
+    color: theme.palette.error.main,
+    '&.Mui-selected': {
+        color: theme.palette.error.main
     },
 };
 

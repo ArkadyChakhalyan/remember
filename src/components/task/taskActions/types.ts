@@ -5,4 +5,5 @@ export type TTaskActionsProps = {
     onDateChange: (date: number) => void;
     onDelete: () => void;
     onPriorityChange: (priority: TTaskPriority) => void;
+    setDisableDrag: (value: boolean) => void;
 }

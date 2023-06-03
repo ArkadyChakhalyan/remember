@@ -1,4 +1,6 @@
+import { ETaskDate } from '../../../types/types';
+
 export type TNewTaskDateProps = {
-    date: number;
-    onChange: (date: number) => void;
+    date: ETaskDate;
+    onChange: (date: ETaskDate) => void;
 }

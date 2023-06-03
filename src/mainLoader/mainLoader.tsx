@@ -10,7 +10,7 @@ export const MainLoader = () => {
         setTimeout(() => {
             setLoading(false);
             document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#2c2c2c');
-        }, 1000);
+        }, 1500);
     }, []);
 
     return <Fade in={loading} timeout={400} appear={false}>
@@ -33,7 +33,7 @@ const containerStyle = {
 
 const iconStyle = {
     width: 1,
-    height: theme.spacing(11.5),
+    height: theme.spacing(10),
     [theme.breakpoints.down('sm')]: {
         height: 'unset',
         width: '70%',

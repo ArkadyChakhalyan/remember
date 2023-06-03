@@ -15,6 +15,7 @@ import { getDashboardTaskListTab } from '../../store/reducers/dashboardReducer/s
 import { useLocation } from 'react-router-dom';
 import { getTaskDateByTab } from '../../helpers/getTaskDateByTab';
 import { setUnseenTaskDateAC } from '../../store/reducers/dashboardReducer/dashboardReducer';
+import { getTasks } from '../../store/reducers/tasksReducer/selectors/getTasks';
 
 export const NewTask: FC<TNewTaskProps> = ({
     preventClose,
@@ -26,27 +27,30 @@ export const NewTask: FC<TNewTaskProps> = ({
     const location = useLocation();
 
     const tab = useSelector(getDashboardTaskListTab);
+    const tasks = useSelector(getTasks);
 
     const [text, setText] = useState('');
     const [priority, setPriority] = useState(DEFAULT_TASK_PRIORITY);
-    const [date, setDate] = useState(getTaskDateByLabel(ETaskDate.THIS_MONTH));
+    const [dateType, setDateType] = useState(ETaskDate.THIS_MONTH);
 
     const inputRef = useRef(null);
     const buttonRef = useRef(null);
 
     const onAdd = () => {
         if (!text || !text.trim()) return;
+        const date = getTaskDateByLabel(dateType);
         dispatch(addTaskAC({
             id: uuid(),
             createDate: Date.now(),
             text: text.trim(),
             priority,
             date,
-            doneDate: null
+            doneDate: null,
+            orderNumber: tasks.length + 1
         }));
         if (
             location.pathname.includes((ROUTE_DASHBOARD)) &&
-            (tab !== ETaskListTab.ALL && (date > getTaskDateByTab(tab) || !date))
+            (tab !== ETaskListTab.ALL && (date > getTaskDateByTab(tab) || !dateType))
         ) {
            dispatch(setUnseenTaskDateAC(!date ?
                Date.now() * Date.now() // random big number to highlight 'all' when no date selected
@@ -102,7 +106,7 @@ export const NewTask: FC<TNewTaskProps> = ({
             if (
                 !text &&
                 priority === DEFAULT_TASK_PRIORITY &&
-                date === getTaskDateByLabel(ETaskDate.THIS_MONTH)
+                dateType === ETaskDate.THIS_MONTH
             ) {
                 return;
             }
@@ -111,7 +115,7 @@ export const NewTask: FC<TNewTaskProps> = ({
     }, [text, priority]);
 
     return <Stack sx={containerStyle} spacing={2} onKeyDown={onKeyDown}>
-        <NewTaskDate date={date} onChange={setDate} />
+        <NewTaskDate date={dateType} onChange={setDateType} />
         <TextField
             ref={inputRef}
             multiline

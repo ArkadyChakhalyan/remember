@@ -11,14 +11,12 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <Browser>
-                <ThemeProvider theme={theme}>
-                    <GlobalStyles styles={{ body: { position: 'relative', margin: 0, background: theme.palette.secondary.main } }} />
-                    <App />
-                </ThemeProvider>
-            </Browser>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <Browser>
+            <ThemeProvider theme={theme}>
+                <GlobalStyles styles={{ body: { position: 'relative', margin: 0, background: theme.palette.secondary.main } }} />
+                <App />
+            </ThemeProvider>
+        </Browser>
+    </Provider>
 );

@@ -3,6 +3,7 @@ export interface ITask {
     date: number;
     doneDate: number;
     id: TTaskId;
+    orderNumber?: number;
     priority: TTaskPriority;
     text: string;
 }
@@ -27,4 +28,5 @@ export enum ETaskListTab {
     THIS_WEEK = 'This week',
     THIS_MONTH = 'This month',
     THIS_YEAR = 'This year',
+    OVERDUE = 'Overdue',
 }

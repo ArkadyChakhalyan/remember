@@ -1,6 +1,8 @@
 import { ETaskDate } from '../types/types';
 
-export const getTaskDateByLabel = (label: string) => {
+export const getTaskDateByLabel = (
+    label: string
+): number => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     if (label === ETaskDate.TODAY) {

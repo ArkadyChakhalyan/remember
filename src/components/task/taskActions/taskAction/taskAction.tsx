@@ -42,6 +42,10 @@ const containerStyle = {
             fontWeight: 600
         }
     },
+    [theme.breakpoints.down('sm')]: {
+        px: 2,
+        borderRadius: theme.shape.borderRadius * 3,
+    },
 };
 
 const textStyle = {

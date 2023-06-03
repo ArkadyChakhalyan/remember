@@ -1,7 +1,7 @@
 import { alpha, Box, Checkbox, Stack, TextField } from '@mui/material';
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { TTaskProps } from './types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTaskAC, editTaskAC, toggleTaskAC } from '../../store/reducers/tasksReducer/tasksReducer';
 import { theme } from '../../style/theme';
 import RadioButtonUncheckedRoundedIcon from '@mui/icons-material/RadioButtonUncheckedRounded';
@@ -11,14 +11,21 @@ import { PRIORITY_COLORS } from '../../app/constants';
 import { NEW_TASK_PLACEHOLDER } from '../newTask/constants';
 import { v4 as uuid } from 'uuid';
 import { ITask, TTaskPriority } from '../../types/types';
+import { getTasks } from '../../store/reducers/tasksReducer/selectors/getTasks';
+import DragIndicatorRoundedIcon from '@mui/icons-material/DragIndicatorRounded';
 
 export const Task: FC<TTaskProps> = ({
+    draggableProvided,
+    dragging,
     task,
-    onClose
+    onClose,
+    setDisableDrag
 }) => {
     const { id, text } = task;
 
     const dispatch = useDispatch();
+
+    const tasks = useSelector(getTasks);
 
     const [value, setValue] = useState(text);
     const [inputFocus, setInputFocus] = useState(null);
@@ -59,6 +66,7 @@ export const Task: FC<TTaskProps> = ({
             id: uuid(),
             createDate: Date.now(),
             text: value.trim(),
+            orderNumber: tasks.length + 1
         }));
         setValue('');
         setTaskModel(initialTaskRef.current);
@@ -122,13 +130,21 @@ export const Task: FC<TTaskProps> = ({
         setTaskModel(task);
     }, [task]);
 
+    useEffect(() => {
+        if (!draggableProvided) return;
+        ref.current = draggableProvided.innerRef;
+    }, [draggableProvided]);
+
     return <Stack
-        ref={ref}
-        sx={containerStyle}
+        ref={draggableProvided?.innerRef || ref}
+        sx={{ ...containerStyle, ...(dragging ? draggingStyle : {}) }}
         onKeyDown={onKeyDown}
         tabIndex={0}
         onBlur={onBlur}
+        {...draggableProvided?.draggableProps}
+        {...draggableProvided?.dragHandleProps}
     >
+        {id && <DragIndicatorRoundedIcon sx={dragStyle} />}
         {!!taskModel.priority && <Box sx={{ ...priorityStyle, bgcolor: PRIORITY_COLORS[taskModel.priority] }} />}
         <Checkbox
             checked={!!taskModel.doneDate}
@@ -159,6 +175,7 @@ export const Task: FC<TTaskProps> = ({
             onDelete={onClose}
             onDateChange={onDateChange}
             onPriorityChange={onPriorityChange}
+            setDisableDrag={setDisableDrag}
         />
     </Stack>;
 };
@@ -174,10 +191,14 @@ const containerStyle = {
         '.MuiIconButton-root:last-of-type': {
             opacity: 1,
             pointerEvents: 'all'
+        },
+        '& > .MuiSvgIcon-root:first-of-type': {
+            opacity: 1
         }
     },
     '&:focus-visible': {
-        outline: 'none'
+        outline: 'none',
+        boxShadow: `0 0 ${theme.spacing()} ${alpha(theme.palette.common.black, 0.2)}`,
     },
 };
 
@@ -230,3 +251,38 @@ const priorityStyle = {
     height: `calc(100% - ${theme.spacing(1.75)})`,
     borderRadius: theme.shape.borderRadius
 };
+
+const draggingStyle = {
+    cursor: 'drag',
+    boxShadow: `0 0 ${theme.spacing()} ${alpha(theme.palette.common.black, 0.2)}`,
+    '& > .MuiSvgIcon-root:first-of-type': {
+        opacity: 1,
+        color: theme.palette.secondary.main
+    },
+    '.MuiIconButton-root:last-of-type': {
+        opacity: 1
+    },
+};
+
+const dragStyle = {
+    position: 'absolute',
+    left: theme.spacing(-3.25),
+    top: theme.spacing(),
+    opacity: 0,
+    transition: theme.transitions.create('opacity'),
+    width: theme.spacing(2.75),
+    color: alpha(theme.palette.secondary.main, 0.6),
+    '&:hover': {
+        color: theme.palette.secondary.main,
+    },
+    '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        right: 0
+    },
+    [theme.breakpoints.down('sm')]: {
+        opacity: 1,
+    }
+}

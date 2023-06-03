@@ -11,7 +11,7 @@ export const MENU_BAR_OPTIONS = [
         link: ROUTE_DASHBOARD,
     },
     {
-        label: 'Tasks',
+        label: 'Task list',
         icon: <ChecklistRoundedIcon />,
         link: ROUTE_TASKS
     },

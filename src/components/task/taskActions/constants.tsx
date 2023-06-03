@@ -7,5 +7,6 @@ export const TASK_ACTIONS_DATE = 'Due date';
 export const TASK_ACTIONS_PRIORITY = 'Priority';
 export const TASK_ACTIONS_PRIORITY_CHANGE = 'Change priority';
 export const TASK_ACTIONS_PRIORITY_ADD = 'Add priority';
-export const TASK_ACTIONS_DUPLICATE = 'Duplicate';
 export const TASK_ACTIONS_SUB_TASK = 'Add sub-task';
+
+export const ONE_DAY = 24 * 60 * 60 * 1000;

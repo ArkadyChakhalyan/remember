@@ -6,34 +6,35 @@ import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import { theme } from '../../../style/theme';
 import {
+    ONE_DAY,
     TASK_ACTIONS_DATE,
     TASK_ACTIONS_DATE_ADD,
     TASK_ACTIONS_DATE_CHANGE,
     TASK_ACTIONS_DELETE,
-    TASK_ACTIONS_DUPLICATE,
     TASK_ACTIONS_PRIORITY,
     TASK_ACTIONS_PRIORITY_ADD,
     TASK_ACTIONS_PRIORITY_CHANGE,
     TASK_ACTIONS_SUB_TASK
 } from './constants';
 import { TaskAction } from './taskAction/taskAction';
-import { addTaskAC, deleteTaskAC } from '../../../store/reducers/tasksReducer/tasksReducer';
-import { v4 as uuid } from 'uuid';
+import { deleteTaskAC } from '../../../store/reducers/tasksReducer/tasksReducer';
 import { TaskPriorities } from '../../taskPriorities/taskPriorities';
-import { TTaskPriority } from '../../../types/types';
+import { ETaskDate, TTaskPriority } from '../../../types/types';
 import EventNoteRoundedIcon from '@mui/icons-material/EventNoteRounded';
 import DeleteOutlineRoundedIcon from '@mui/icons-material/DeleteOutlineRounded';
-import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 import SubdirectoryArrowRightRoundedIcon from '@mui/icons-material/SubdirectoryArrowRightRounded';
 import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 import { TASK_DATES } from '../../../app/constants';
 import { getTaskDateByLabel } from '../../../helpers/getTaskDateByLabel';
+import moment from 'moment';
+import { getTaskDateOverdue } from '../../../helpers/getTaskDateOverdue';
 
 export const TaskActions: FC<TTaskActionsProps> = ({
     task,
     onDateChange,
     onDelete: onDeleteOwn,
-    onPriorityChange
+    onPriorityChange,
+    setDisableDrag
 }) => {
     const iOS = typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -46,10 +47,12 @@ export const TaskActions: FC<TTaskActionsProps> = ({
     const [dateEdit, setDateEdit] = useState(null);
 
     const onOpen = (e: MouseEvent<HTMLElement>) => {
+        setDisableDrag(true);
         setAnchor(e.currentTarget);
     };
 
     const onClose = () => {
+        setDisableDrag(false);
         setAnchor(null);
         setTimeout(() => {
             setPriorityEdit(false);
@@ -85,14 +88,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
         }
     };
 
-    const onDuplicate = () => {
-        dispatch(addTaskAC({
-            ...task,
-            createDate: Date.now(),
-            id: uuid()
-        }));
-    };
-
     const onEnter = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') {
             onClose();
@@ -120,18 +115,26 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             >
                 {dateEdit ? TASK_ACTIONS_DATE : TASK_ACTIONS_PRIORITY}
             </Typography>
+            {dateEdit && date &&
+                <Typography
+                    variant={'body2'}
+                    sx={{ ...headerDateTextStyle, ...(date && getTaskDateOverdue(date) ? overdueStyle : {}) }}
+                >
+                    {moment(date - ONE_DAY).format(new Date(date).getFullYear() !== new Date().getFullYear() ? 'MMMM D YYYY' : 'MMMM D')}
+                </Typography>
+            }
         </Stack>;
 
     const editPriority = priorityEdit && <TaskPriorities onPriorityChange={onPrioritySelect} priority={priority} sx={priorityStyle} />;
 
-    const editDate = dateEdit && <Stack sx={{ minWidth: theme.spacing(20) }}>
+    const editDate = dateEdit && <Stack sx={{ minWidth: theme.spacing(23) }}>
         {
             TASK_DATES.map(item => (
                 <TaskAction
                     key={item}
                     label={item}
                     onClick={() => onDateSelect(getTaskDateByLabel(item))}
-                    selected={(date || 0) === getTaskDateByLabel(item)}
+                    selected={!date && item === ETaskDate.SOMEDAY}
                 />
             ))
         }
@@ -156,14 +159,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             label={TASK_ACTIONS_SUB_TASK}
             icon={<SubdirectoryArrowRightRoundedIcon />}
             onClick={() => onMenuItemClick(null)}
-            onEnter={onEnter}
-        />;
-
-    const duplicateButton = !priorityEdit && !dateEdit && id &&
-        <TaskAction
-            label={TASK_ACTIONS_DUPLICATE}
-            icon={<ContentCopyRoundedIcon />}
-            onClick={() => onMenuItemClick(onDuplicate)}
             onEnter={onEnter}
         />;
 
@@ -200,7 +195,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             {priorityButton}
             {!priorityEdit && !dateEdit && id && <Divider />}
             {subTaskButton}
-            {duplicateButton}
             {!priorityEdit &&  !dateEdit && <Divider />}
             {deleteButton}
         </Menu>
@@ -221,7 +215,6 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             {priorityButton}
             {!priorityEdit && !dateEdit && id && <Divider />}
             {subTaskButton}
-            {duplicateButton}
             {!priorityEdit &&  !dateEdit && <Divider />}
             {deleteButton}
         </SwipeableDrawer>;
@@ -233,16 +226,18 @@ export const TaskActions: FC<TTaskActionsProps> = ({
             color={'secondary'}
             onClick={onOpen}
         >
-            <MoreVertRoundedIcon />
+            <MoreVertRoundedIcon sx={{ pointerEvents: 'none' }}/>
         </IconButton>
     </>;
 };
 
 const buttonStyle = {
+    pointerEvents: 'none',
     color: alpha(theme.palette.secondary.main, 0.6),
     transition: theme.transitions.create(['color', 'opacity']),
     transform: 'rotate(90deg)',
     '&:hover, &:focus': {
+        pointerEvents: 'all',
         color: theme.palette.secondary.main,
     },
     [theme.breakpoints.up('sm')]: {
@@ -266,14 +261,36 @@ const menuStyle = {
 };
 
 const drawerStyle = {
+    bottom: theme.spacing(1.5),
+    left: theme.spacing(1.5),
+    right: theme.spacing(1.5),
+    p: 1.5,
+    pt: 3.5,
+    borderRadius: theme.shape.borderRadius * 6,
     background: theme.palette.primary.main,
-    py: 1,
+    '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: theme.spacing(2.5),
+        left: '50%',
+        transform: 'translateX(-50%)',
+        height: theme.spacing(0.75),
+        width: theme.spacing(5),
+        background: alpha(theme.palette.secondary.main, 0.3),
+        borderRadius: theme.shape.borderRadius * 2
+    }
 };
 
 const priorityStyle = {
     minWidth: theme.spacing(27),
     maxWidth: theme.spacing(40),
     p: 1,
+    '.MuiButtonBase-root': {
+        borderRadius: theme.shape.borderRadius * 2.5,
+        '&:before': {
+            borderRadius: theme.shape.borderRadius * 3.5,
+        }
+    },
     [theme.breakpoints.up('sm')]: {
         '.MuiButtonBase-root': {
             width: theme.spacing(4),
@@ -319,4 +336,19 @@ const headerTextStyle = {
     [theme.breakpoints.down('sm')]: {
         fontSize: '0.95rem'
     },
+};
+
+const headerDateTextStyle  = {
+    flexGrow: 1,
+    ml: 1.5,
+    color: alpha(theme.palette.secondary.main, 0.6),
+    fontWeight: 600,
+    textAlign: 'end',
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '0.95rem',
+    },
+};
+
+const overdueStyle = {
+    color: theme.palette.error.main
 };
